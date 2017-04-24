@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Client Register</title>
+        <script src="vendor/jquery/jquery-3.2.0.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="vendor/quickserv/quickserv.css" />
+    </h:head>
+    <h:body>
+        <header>
+            <nav class="navbar navbar-default">
+                <div class="container">
+                    <!-- Navbar header -->
+                    <div class="navbar-header">
+                        <!-- Toggle Menu Button -->
+                        <button class="navbar-toggle collapsed" 
+                                data-toggle="collapse" 
+                                data-target="#rhecruta-navbar"
+                                aria-expanded="false">
+                            <span class="sr-only">Toggle Navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <!-- Nav Brand -->
+                        <a class="navbar-brand" href="index.xhtml"><strong class="underline">Quick</strong>Serv</a>
+                    </div>
+                    <div class="collapse navbar-collapse" id="rhecruta-navbar">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="index.xhtml">Acesso</a></li>
+                            <li><a href="signup-client.xhtml">Cadastrar Cliente</a></li>
+                            <li class="active"><a href="signup-professional.xhtml">Cadastrar Profissional</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <section class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3 signup">
+
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h4>Por favor, preencha todos os campos para criar sua conta!</h4>
+                            </div>
+                            <div class="panel-body">
+                                <h:messages class="list-unstyled" 
+                                    infoClass="alert alert-success"
+                                    errorClass="alert alert-danger"/>
+                                <h:form id="form-signup" class="form" enctype="multipart/form-data">
+                                    <label for="username">E-mail</label>
+                                    <h:inputText class="form-control" id="username" a:placeholder="E-mail" value="#{professionalCtrl.account.username}"/>
+                                    <label for="password">Senha</label>
+                                    <h:inputSecret class="form-control" id="password" a:placeholder="Senha" value="#{professionalCtrl.account.password}"/>
+                                    <label for="userPhoto">Sua Foto</label>
+                                    <h:inputFile class="form-control" id="userPhotoInput" value="#{professionalCtrl.userPhotoPart}" />
+                                    <label for="firstname">Nome</label>
+                                    <h:inputText class="form-control" id="firstname" a:placeholder="Nome" value="#{professionalCtrl.professional.firstname}"/>
+                                    <label for="lastname">Sobrenome</label>
+                                    <h:inputText class="form-control" id="lastname" a:placeholder="Sobrenome" value="#{professionalCtrl.professional.lastname}"/>
+                                    <label for="cpf">CPF</label>
+                                    <h:inputText class="form-control" id="cpf" a:placeholder="CPF" value="#{professionalCtrl.professional.cpf}"/>
+                                    <label for="documentPhoto">Foto do documento</label>
+                                    <h:inputFile class="form-control" id="documentPhotoInput" value="#{professionalCtrl.documentPhotoPart}">
+                                    </h:inputFile> 
+                                    <h:commandButton class="btn btn-primary" id="signin" action="#{professionalCtrl.saveProfessional()}" value="Cadastrar" />
+                                </h:form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </h:body>
+</html>
+

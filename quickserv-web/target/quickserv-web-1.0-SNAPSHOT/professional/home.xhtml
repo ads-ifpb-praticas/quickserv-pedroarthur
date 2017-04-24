@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="../templates/layout.xhtml">
+        <ui:define name="header">
+            <nav class="navbar navbar-default">
+                <div class="container">
+                    <!-- Navbar header -->
+                    <div class="navbar-header">
+                        <!-- Toggle Menu Button -->
+                        <button class="navbar-toggle collapsed" 
+                                data-toggle="collapse" 
+                                data-target="#rhecruta-navbar"
+                                aria-expanded="false">
+                            <span class="sr-only">Toggle Navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <!-- Nav Brand -->
+                        <a class="navbar-brand" href="index.xhtml"><strong class="underline">Quick</strong>Serv</a>
+                    </div>
+                    <div class="collapse navbar-collapse" id="rhecruta-navbar">
+                        <h:form>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li class="active">
+                                    <a href="#">Solicitações </a>
+                                </li>
+                                <li><a href="#">Propostas <span class="badge">9</span></a></li>
+                                <li><a href="#">Serviços <span class="badge">15</span></a></li>
+                                <li class="dropdown open">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                        Welcome, #{professionalCtrl.loggedProfessional.firstname}!
+                                        <span class="caret"></span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <h:commandLink action="#{loginController.signOut()}" 
+                                                           value="Log Out" />
+                                        </li>
+                                        <li><h:link value="Minha Conta" outcome="account.xhtml"/></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </h:form>
+                    </div>
+                </div>
+            </nav>
+        </ui:define>
+        <ui:define name="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <h:form>
+                            <label>Busca por tipo de serviço</label>
+                            <div class="input-group">
+                                <h:selectOneMenu id="type" class="form-control" value="#{serviceRequestCtrl.serviceTypeSearch}">
+                                    <f:selectItems value="#{serviceRequestCtrl.types}" 
+                                                   var="type" 
+                                                   itemValue="#{type}" 
+                                                   itemLabel="#{type.description}"/>
+                                </h:selectOneMenu>
+                                <span class="input-group-btn">
+                                    <h:commandButton class="btn btn-primary" value="Filtrar" action="#{serviceRequestCtrl.listByTypeOrderedByDate()}"/>
+                                    <h:commandButton class="btn btn-primary" value="Mostrar Todos" action="#{serviceRequestCtrl.listAllOrderedByDate()}"/>
+                                </span>
+                            </div>
+                        </h:form>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+
+                        <div class="timeline-centered" style="margin-top: 30px;">
+
+                            <ui:repeat var="serviceRequest" value="#{serviceRequestCtrl.searchResult}">
+                                <article class="timeline-entry">
+                                    <div class="timeline-entry-inner">
+                                        <div class="timeline-icon">
+                                            <img class="category-icon" src="../imgs/categorias/#{serviceRequest.type.description}.png"></img>
+                                        </div>
+                                        <div class="timeline-label">
+                                            <h2>
+                                                <span class="glyphicon glyphicon-user"></span>
+                                                <a href="#" class="actor">#{serviceRequest.owner.firstname}</a> 
+                                                <span>
+                                                    <h:outputText value="#{serviceRequest.dateTime}">
+                                                        <f:converter converterId="localDateTimeConverter"/>
+                                                    </h:outputText>
+                                                </span>
+                                            </h2>
+                                            <h5 class="title underline">#{serviceRequest.title}</h5>
+                                            <blockquote class="desc">
+                                                <span class="glyphicon glyphicon-list-alt"></span>
+                                                #{serviceRequest.description} <br />
+                                                <span class="glyphicon glyphicon-map-marker"></span>
+                                                #{serviceRequest.locate.country}, 
+                                                #{serviceRequest.locate.state}, 
+                                                #{serviceRequest.locate.city}, 
+                                                #{serviceRequest.locate.neighborhood}
+                                            </blockquote>
+                                            <button class="btn btn-primary btn-xs">Enviar Proposta</button>
+                                            <button class="btn btn-primary btn-xs">Ver Detalhes</button>
+                                        </div>
+                                    </div>
+                                </article>
+                            </ui:repeat>
+
+                            <h:panelGroup rendered="#{not empty serviceRequestCtrl.searchResult}">
+                                <article class="timeline-entry begin">
+                                    <div class="timeline-entry-inner">
+                                        <div class="timeline-icon" style="-webkit-transform: rotate(-90deg); -moz-transform: rotate(-90deg);">
+                                            <i class="entypo-flight"></i> +
+                                        </div>
+                                    </div>
+                                </article>
+                            </h:panelGroup>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>
