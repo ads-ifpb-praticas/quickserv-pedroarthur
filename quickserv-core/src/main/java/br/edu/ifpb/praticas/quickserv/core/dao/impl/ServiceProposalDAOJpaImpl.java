@@ -44,5 +44,14 @@ public class ServiceProposalDAOJpaImpl implements ServiceProposalDAO {
     public void update(ServiceProposal obj) {
         em.merge(obj);
     }
+
+    @Override
+    public List<ServiceProposal> listByProfessional(String professionalCpf) {
+        String sql = "SELECT sp FROM ServiceProposal sp WHERE sp.professional.cpf = :professionalCpf";
+        TypedQuery<ServiceProposal> query = em
+                .createQuery(sql, ServiceProposal.class)
+                .setParameter("professionalCpf", professionalCpf);
+        return query.getResultList();
+    }
     
 }

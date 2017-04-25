@@ -6,6 +6,7 @@
 package br.edu.ifpb.praticas.quickserv.core.services;
 
 import br.edu.ifpb.praticas.quickserv.core.dao.interfaces.ServiceProposalDAO;
+import br.edu.ifpb.praticas.quickserv.shared.domain.Professional;
 import br.edu.ifpb.praticas.quickserv.shared.domain.ServiceProposal;
 import br.edu.ifpb.praticas.quickserv.shared.domain.ServiceRequest;
 import br.edu.ifpb.praticas.quickserv.shared.services.interfaces.ServiceProposalService;
@@ -39,6 +40,11 @@ public class ServiceProposalServiceImpl implements ServiceProposalService {
     @Override
     public void update(ServiceProposal serviceProposal) {
         dao.update(serviceProposal);
+    }
+
+    @Override
+    public List<ServiceProposal> listByProfessional(Professional professional) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
