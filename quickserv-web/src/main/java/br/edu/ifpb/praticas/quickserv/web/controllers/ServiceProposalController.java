@@ -94,6 +94,12 @@ public class ServiceProposalController implements Serializable {
         return null;
     }
     
+    public List<ServiceProposal> listByProfessional(Professional professional) {
+        List<ServiceProposal> proposals = 
+                this.serviceProposalService.listByProfessional(professional);
+        return proposals;
+    }
+    
     private void addMessage(String clientId, FacesMessage message) {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(clientId, message);

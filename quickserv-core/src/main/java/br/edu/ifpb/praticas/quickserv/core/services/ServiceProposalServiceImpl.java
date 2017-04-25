@@ -44,7 +44,7 @@ public class ServiceProposalServiceImpl implements ServiceProposalService {
 
     @Override
     public List<ServiceProposal> listByProfessional(Professional professional) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return dao.listByProfessional(professional.getCpf());
     }
     
 }

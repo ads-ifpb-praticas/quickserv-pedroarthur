@@ -42,7 +42,7 @@ and open the template in the editor.
                                         <span class="caret"></span>
                                     </a>
                                     <ul class="dropdown-menu"> 
-                                       <li>
+                                        <li>
                                             <h:commandLink action="#{loginController.signOut()}" 
                                                            value="Log Out" />
                                         </li>
@@ -57,37 +57,45 @@ and open the template in the editor.
         </ui:define>
         <ui:define name="content">
             <section class="section">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h4>Suas Propostas</h4>
-                    </div>
-                    <div class="panel-body">
-                        <h:dataTable class="table table-striped" value="" var="proposal">
-                            <h:column>
-                                <f:facet name="header">Data</f:facet>
-                                <h:outputText value="#{proposal.dateTime}">
-                                    <f:converter converterId="localDateTimeConverter" />
-                                </h:outputText>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">Descrição</f:facet>
-                                    #{proposal.description}
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">Preço</f:facet>
-                                R$ #{proposal.price}
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">Título da Solicitação</f:facet>
-                                    #{proposal.serviceRequest.title}
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">Data da Solicitação</f:facet>
-                                <h:outputText value="#{proposal.serviceRequest.dateTime}">
-                                    <f:converter converterId="localDateTimeConverter" />
-                                </h:outputText>
-                            </h:column>
-                        </h:dataTable>
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h4>Suas Propostas</h4>
+                        </div>
+                        <div class="panel-body">
+                            <h:dataTable class="table table-striped" 
+                                         value="#{serviceProposalCtrl.listByProfessional(professionalCtrl.loggedProfessional)}"
+                                         var="proposal">
+                                <!--                            <h:column>
+                                                                <f:facet name="header">Data</f:facet>
+                                                                <h:outputText value="#{proposal.dateTime}">
+                                                                    <f:converter converterId="localDateTimeConverter" />
+                                                                </h:outputText>
+                                                            </h:column>-->
+                                <h:column>
+                                    <f:facet name="header">Descrição</f:facet>
+                                        #{proposal.description}
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">Preço</f:facet>
+                                    R$ #{proposal.price}
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">Título da Solicitação</f:facet>
+                                        #{proposal.serviceRequest.title}
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">Data da Solicitação</f:facet>
+                                    <h:outputText value="#{proposal.serviceRequest.dateTime}">
+                                        <f:converter converterId="localDateTimeConverter" />
+                                    </h:outputText>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">Ações</f:facet>
+                                    <button class="btn btn-primary btn-xs">Ver mais</button>
+                                </h:column>
+                            </h:dataTable>
+                        </div>
                     </div>
                 </div>
             </section>
