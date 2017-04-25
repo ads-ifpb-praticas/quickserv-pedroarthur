@@ -34,12 +34,12 @@ and open the template in the editor.
                         <h:form>
                             <ul class="nav navbar-nav navbar-right">
                                 <li><a href="home.xhtml">Solicitações </a></li>
-                                <li>
-                                    <a href="proposals.xhtml">Propostas 
+                                <li class="active">
+                                    <h:link value="Propostas" outcome="proposals.xhtml">
                                         <span class="badge">
                                             #{serviceProposalCtrl.countByProfessional(professionalCtrl.loggedProfessional)}
                                         </span>
-                                    </a>
+                                    </h:link>
                                 </li>
                                 <li><a href="#">Serviços <span class="badge">15</span></a></li>
                                 <li class="dropdown open">

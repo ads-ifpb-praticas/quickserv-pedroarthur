@@ -38,11 +38,11 @@ and open the template in the editor.
                                     <a href="home.xhtml">Solicitações </a>
                                 </li>
                                 <li>
-                                    <a href="proposals.xhtml">Propostas 
+                                    <h:link value="Propostas" outcome="proposals.xhtml">
                                         <span class="badge">
                                             #{serviceProposalCtrl.countByProfessional(professionalCtrl.loggedProfessional)}
                                         </span>
-                                    </a>
+                                    </h:link>
                                 </li>
                                 <li><a href="#">Serviços <span class="badge">15</span></a></li>
                                 <li class="dropdown open active">
