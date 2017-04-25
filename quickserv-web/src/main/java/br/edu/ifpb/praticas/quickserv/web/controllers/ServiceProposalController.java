@@ -100,6 +100,10 @@ public class ServiceProposalController implements Serializable {
         return proposals;
     }
     
+    public Long countByProfessional(Professional professional) {
+        return this.serviceProposalService.countByProfessional(professional);
+    }
+    
     private void addMessage(String clientId, FacesMessage message) {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(clientId, message);
