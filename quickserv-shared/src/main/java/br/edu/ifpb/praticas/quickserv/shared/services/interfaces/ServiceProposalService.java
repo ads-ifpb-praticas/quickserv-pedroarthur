@@ -20,4 +20,5 @@ public interface ServiceProposalService {
     void save(ServiceProposal serviceProposal);
     void update(ServiceProposal serviceProposal);
     List<ServiceProposal> listByProfessional(Professional professional);
+    Long countByProfessional(Professional professional);
 }

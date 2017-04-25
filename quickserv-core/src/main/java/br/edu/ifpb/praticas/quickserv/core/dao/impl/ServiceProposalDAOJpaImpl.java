@@ -53,5 +53,14 @@ public class ServiceProposalDAOJpaImpl implements ServiceProposalDAO {
                 .setParameter("professionalCpf", professionalCpf);
         return query.getResultList();
     }
+
+    @Override
+    public Long countByProfessional(String professionalCpf) {
+        String sql = "SELECT COUNT(sp) FROM ServiceProposal sp WHERE sp.professional.cpf = :professionalCpf";
+        TypedQuery<Long> query = em
+                .createQuery(sql, Long.class)
+                .setParameter("professionalCpf", professionalCpf);
+        return query.getSingleResult();
+    }
     
 }

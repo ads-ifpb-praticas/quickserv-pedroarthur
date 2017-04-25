@@ -46,5 +46,10 @@ public class ServiceProposalServiceImpl implements ServiceProposalService {
     public List<ServiceProposal> listByProfessional(Professional professional) {
         return dao.listByProfessional(professional.getCpf());
     }
+
+    @Override
+    public Long countByProfessional(Professional professional) {
+        return dao.countByProfessional(professional.getCpf());
+    }
     
 }
