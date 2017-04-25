@@ -33,6 +33,7 @@ public class SuggestedHoursController implements Serializable {
     
     @PostConstruct
     private void postConstruct() {
+        System.out.println("[SuggestedHoursController] I'm Constructed!");
         initConversation();
         initPeriods();
         initPeriod();
@@ -62,6 +63,7 @@ public class SuggestedHoursController implements Serializable {
     }
     
     public String removePeriod(Period period) {
+        System.out.println("[SuggeestedHoursController] removing "+period);
         this.periods.remove(period);
         return null;
     }
