@@ -4,4 +4,4 @@ jdk:
 branches:
   only:
     - /^v.*$/
-script: mvn install
+script: mvn install -DskipITs
