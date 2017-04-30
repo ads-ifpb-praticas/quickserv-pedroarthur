@@ -2,7 +2,7 @@ language: java
 jdk: 
   oraclejdk8
 install: mvn install -U -DskipTests=true
-script: mvn integration-test verify -Ptest
+script: mvn integration-test verify
 services:
   - postgresql
 before_script:
