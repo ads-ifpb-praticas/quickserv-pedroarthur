@@ -1,0 +1,9 @@
+br\edu\ifpb\praticas\quickserv\core\services\ClientServiceTest.class
+br\edu\ifpb\praticas\quickserv\core\services\ProfessionalServiceTest.class
+br\edu\ifpb\praticas\quickserv\core\services\ClientServiceIntegrationTest.class
+br\edu\ifpb\praticas\quickserv\core\services\ProfessionalServiceIntegrationTest.class
+br\edu\ifpb\praticas\quickserv\core\services\StartupBeanIntegrationTest.class
+br\edu\ifpb\praticas\quickserv\core\services\LoginServiceIntegrationTest.class
+br\edu\ifpb\praticas\quickserv\core\services\AdminServiceIntegrationTest.class
+br\edu\ifpb\praticas\quickserv\core\services\LoginServiceTest.class
+br\edu\ifpb\praticas\quickserv\core\services\ImageServiceTest.class

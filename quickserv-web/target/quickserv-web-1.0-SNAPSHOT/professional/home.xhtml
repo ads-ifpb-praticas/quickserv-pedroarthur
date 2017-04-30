@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="../templates/layout.xhtml">
+        <ui:define name="header">
+            <nav class="navbar navbar-default">
+                <div class="container">
+                    <!-- Navbar header -->
+                    <div class="navbar-header">
+                        <!-- Toggle Menu Button -->
+                        <button class="navbar-toggle collapsed" 
+                                data-toggle="collapse" 
+                                data-target="#rhecruta-navbar"
+                                aria-expanded="false">
+                            <span class="sr-only">Toggle Navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <!-- Nav Brand -->
+                        <a class="navbar-brand" href="index.xhtml"><strong class="underline">Quick</strong>Serv</a>
+                    </div>
+                    <div class="collapse navbar-collapse" id="rhecruta-navbar">
+                        <h:form>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li class="active">
+                                    <a href="#">Solicitações </a>
+                                </li>
+                                <li>
+                                    <h:link value="Propostas" outcome="proposals.xhtml">
+                                        <span class="badge">
+                                            #{serviceProposalCtrl.countByProfessional(professionalCtrl.loggedProfessional)}
+                                        </span>
+                                    </h:link>
+                                </li>
+                                <li><a href="#">Serviços <span class="badge">15</span></a></li>
+                                <li class="dropdown open">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                        Welcome, #{professionalCtrl.loggedProfessional.firstname}!
+                                        <span class="caret"></span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <h:commandLink action="#{loginController.signOut()}" 
+                                                           value="Log Out" />
+                                        </li>
+                                        <li><h:link value="Minha Conta" outcome="account.xhtml"/></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </h:form>
+                    </div>
+                </div>
+            </nav>
+        </ui:define>
+        <ui:define name="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <h:form>
+                            <label>Busca por tipo de serviço</label>
+                            <div class="input-group">
+                                <h:selectOneMenu id="type" class="form-control" value="#{serviceRequestCtrl.serviceTypeSearch}">
+                                    <f:selectItems value="#{serviceRequestCtrl.types}" 
+                                                   var="type" 
+                                                   itemValue="#{type}" 
+                                                   itemLabel="#{type.description}"/>
+                                </h:selectOneMenu>
+                                <span class="input-group-btn">
+                                    <h:commandButton class="btn btn-primary" value="Filtrar" action="#{serviceRequestCtrl.listByTypeOrderedByDate()}"/>
+                                    <h:commandButton class="btn btn-primary" value="Mostrar Todos" action="#{serviceRequestCtrl.listAllOrderedByDate()}"/>
+                                </span>
+                            </div>
+                        </h:form>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+
+                        <div class="timeline-centered" style="margin-top: 30px;">
+
+                            <ui:repeat var="serviceRequest" value="#{serviceRequestCtrl.searchResult}">
+                                <article class="timeline-entry">
+                                    <div class="timeline-entry-inner">
+                                        <div class="timeline-icon">
+                                            <img class="category-icon" src="../imgs/categorias/#{serviceRequest.type.description}.png"></img>
+                                        </div>
+                                        <div class="timeline-label">
+                                            <h2>
+                                                <span class="glyphicon glyphicon-user"></span>
+                                                <a href="#" class="actor">#{serviceRequest.owner.firstname}</a> 
+                                                <span>
+                                                    <h:outputText value="#{serviceRequest.dateTime}">
+                                                        <f:converter converterId="localDateTimeConverter"/>
+                                                    </h:outputText>
+                                                </span>
+                                            </h2>
+                                            <h5 class="title underline">#{serviceRequest.title}</h5>
+                                            <blockquote class="desc">
+                                                <span class="glyphicon glyphicon-list-alt"></span>
+                                                #{serviceRequest.description} <br />
+                                                <span class="glyphicon glyphicon-map-marker"></span>
+                                                #{serviceRequest.locate.country}, 
+                                                #{serviceRequest.locate.state}, 
+                                                #{serviceRequest.locate.city}, 
+                                                #{serviceRequest.locate.neighborhood}
+                                            </blockquote>
+                                            <h:form>
+                                                <h:commandButton id="beginSaveBtn" class="btn btn-primary btn-xs" value="Enviar Proposta" action="#{serviceProposalCtrl.beginSave(serviceRequest)}">
+                                                    <f:ajax execute="@this"
+                                                            render="newProposalForm"
+                                                            onevent="openNewProposalModal"/>
+                                                </h:commandButton>
+
+                                                <button class="btn btn-primary btn-xs">Ver Detalhes</button>
+                                            </h:form>
+                                        </div>
+                                    </div>
+                                </article>
+                            </ui:repeat>
+
+
+                            <h:panelGroup rendered="#{not empty serviceRequestCtrl.searchResult}">
+                                <article class="timeline-entry begin">
+                                    <div class="timeline-entry-inner">
+                                        <div class="timeline-icon" style="-webkit-transform: rotate(-90deg); -moz-transform: rotate(-90deg);">
+                                            <i class="entypo-flight"></i> +
+                                        </div>
+                                    </div>
+                                </article>
+                            </h:panelGroup>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div id="newProposalModal" class="modal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <h:form id="newProposalForm">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                <h4 class="modal-title">Nova Proposta</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>Preencha os campos abaixo para enviar uma proposta para a solicitação de serviço "#{serviceProposalCtrl.serviceRequest.title}"</p>
+                                <div class="form-group">
+                                    <label for="description">Descrição</label>
+                                    <h:inputText id="description" class="form-control" value="#{serviceProposalCtrl.serviceProposal.description}"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="price">Preço</label>
+                                    <h:inputText id="price" class="form-control" value="#{serviceProposalCtrl.serviceProposal.price}"/>
+                                </div>
+                                <div class="jumbotron" style="padding: 20px; border-radius: 5px;">
+                                    <div class="row">   
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="startSuggestedDate">Data sugerida Início</label>
+                                                <h:inputText class="form-control" id="startSuggestedDate" 
+                                                             size="20" 
+                                                             a:placeholder="Data sugerida início"
+                                                             value="#{suggestHoursCtrl.period.start}">
+                                                    <f:converter converterId="localDateTimeConverter" />
+                                                </h:inputText>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="endSuggestedDate">Data sugerida Fim</label>
+                                                <h:inputText class="form-control" id="endSuggestedDate" 
+                                                             size="20" 
+                                                             a:placeholder="Data sugerida fim"
+                                                             value="#{suggestHoursCtrl.period.end}">
+                                                    <f:converter converterId="localDateTimeConverter" />
+                                                </h:inputText>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h:commandButton class="btn btn-success btn-sm" value="Adicionar período" action="#{suggestHoursCtrl.addPeriod()}">
+                                        <f:ajax execute="startSuggestedDate endSuggestedDate" render="suggestedHours" />
+                                    </h:commandButton>
+
+                                    <div class="panel panel-primary" style="margin-top: 30px;">
+                                        <div class="panel-heading">
+                                            <h4>Horários adicionados</h4>
+                                        </div>
+                                        <div class="panel-body">
+                                            <h:dataTable id="suggestedHours" 
+                                                         class="table table-striped" 
+                                                         value="#{suggestHoursCtrl.periods}"
+                                                         var="period">
+
+                                                <h:column>
+                                                    <f:facet name="header">Data Sugerida Início</f:facet>
+                                                    <h:outputText value="#{period.start}">
+                                                        <f:converter converterId="localDateTimeConverter"/>
+                                                    </h:outputText>
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header">Data Sugerida Fim</f:facet>
+                                                    <h:outputText value="#{period.end}">
+                                                        <f:converter converterId="localDateTimeConverter"/>
+                                                    </h:outputText>
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header">Remover</f:facet>
+                                                    <h:commandButton class="btn btn-danger btn-xs" 
+                                                                     value="remover" >
+                                                        <f:ajax execute="@this" render="@form" 
+                                                                listener="#{suggestHoursCtrl.removePeriod(period)}" />
+                                                    </h:commandButton>
+                                                </h:column>
+
+                                            </h:dataTable>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <h:commandButton class="btn btn-primary" 
+                                                 value="Enviar proposta"
+                                                 action="#{serviceProposalCtrl.save(professionalCtrl.loggedProfessional)}">
+                                </h:commandButton>
+                            </div>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+            
+            <h:panelGroup layout="block" rendered="${not empty facesContext.getMessageList('serviceProposalMsg')}">
+                <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" id="successModal">
+                    <div class="modal-dialog modal-sm" role="document">
+                        <h:messages class="list-unstyled" infoClass="alert alert-success" errorClass="alert alert-danger" layout="block"/>
+                    </div>	 
+                </div>
+            </h:panelGroup> 
+        </ui:define>
+    </ui:composition>
+</html>
