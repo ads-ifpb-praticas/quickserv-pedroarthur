@@ -36,7 +36,7 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 @Cleanup(phase = TestExecutionPhase.AFTER, strategy = CleanupStrategy.USED_ROWS_ONLY)
 @UsingDataSet("datasets/Client.yml")
-public class ClientServiceIntegrationTest {
+public class ClientServiceIT {
     
     @EJB
     private ClientService clientService;
