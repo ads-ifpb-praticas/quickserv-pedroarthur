@@ -43,10 +43,7 @@ public class AccessFilter implements Filter {
         else {
             
             String path = httpRequest.getRequestURI();
-            System.out.println("[AccessFilter] Complete path (RequestURI): "+path);
             path = path.substring(httpRequest.getContextPath().length());
-            System.out.println("[AccessFilter] Context Path: "+httpRequest.getContextPath());
-            System.out.println("[AccessFilter] Request URI - Context Path: "+path);
             UserRole role = loggedUser.getRole();
             switch(role) {
                 

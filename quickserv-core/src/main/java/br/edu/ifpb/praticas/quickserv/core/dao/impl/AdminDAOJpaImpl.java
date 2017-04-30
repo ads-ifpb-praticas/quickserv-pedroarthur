@@ -28,7 +28,7 @@ public class AdminDAOJpaImpl implements AdminDAO {
 
     @Override
     public boolean hasAnAdminRegistered() {
-        String sql = "SELECT COUNT(u) FROM UserAccount u WHERE u.role = :role";
+        String sql = "SELECT COUNT(u) FROM UserAccount u WHERE u.role = :role AND u.actived = true";
         TypedQuery<Long> query = em.createQuery(sql, Long.class)
                 .setParameter("role", UserRole.ADMIN);
         return query.getSingleResult() > 0;

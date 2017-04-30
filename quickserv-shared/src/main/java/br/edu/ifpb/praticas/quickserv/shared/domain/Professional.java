@@ -49,7 +49,8 @@ public class Professional implements Serializable {
     @JoinColumn(name = "user_account_username")
     private UserAccount userAccount;
 
-    public Professional(String cpf, String firstname, String lastname, String phone, Address address, byte[] documentPhotoUrl, RegisterRequestStatus status, UserAccount userAccount) {
+    public Professional(String cpf, String firstname, String lastname, String phone, 
+            Address address, byte[] documentPhotoUrl, RegisterRequestStatus status, UserAccount userAccount) {
         this.cpf = cpf;
         this.firstname = firstname;
         this.lastname = lastname;

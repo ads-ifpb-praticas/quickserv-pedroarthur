@@ -7,6 +7,7 @@ package br.edu.ifpb.praticas.quickserv.core.dao.impl;
 
 import br.edu.ifpb.praticas.quickserv.core.dao.interfaces.RegisterRequestDAO;
 import br.edu.ifpb.praticas.quickserv.shared.domain.RegisterRequest;
+import br.edu.ifpb.praticas.quickserv.shared.enums.RegisterRequestStatus;
 import java.util.List;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -60,6 +61,16 @@ public class RegisterRequestDAOJpaImpl implements RegisterRequestDAO {
         if(result.isEmpty())
             return null;
         return result.get(0);
+    }
+
+    @Override
+    public boolean isPendent(Long registerRequestId) {
+        String sql = "SELECT COUNT(r) FROM RegisterRequest r"
+                + " WHERE r.id = :id AND r.status = :status";
+        TypedQuery<Long> query = em.createQuery(sql, Long.class)
+                .setParameter("id", registerRequestId)
+                .setParameter("status", RegisterRequestStatus.PENDENT);
+        return query.getSingleResult() > 0;
     }
     
 }

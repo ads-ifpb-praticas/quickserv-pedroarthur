@@ -30,6 +30,14 @@ public class LoginServiceImpl implements LoginService {
     @EJB
     private RegisterRequestDAO registerRequestDAO;
 
+    public LoginServiceImpl(LoginDAO loginDAO, RegisterRequestDAO registerRequestDAO) {
+        this.loginDAO = loginDAO;
+        this.registerRequestDAO = registerRequestDAO;
+    }
+
+    public LoginServiceImpl() {
+    }
+
     @Override
     public UserAccount signIn(String username, String password) {
         try {
@@ -52,10 +60,8 @@ public class LoginServiceImpl implements LoginService {
     private void validate(UserAccount userAccount) {
         
         RegisterRequest userLastRegisterRequest = registerRequestDAO.getUserLastRegisterRequest(userAccount.getUsername());
-        System.out.println("Last Register Request: "+userLastRegisterRequest);
         if(userLastRegisterRequest != null) { 
             RegisterRequestStatus status = userLastRegisterRequest.getStatus();
-            System.out.println("status: "+status.getDescription());
             if(!status.equals(RegisterRequestStatus.ACCEPTED)) {
                 if(status.equals(RegisterRequestStatus.PENDENT))
                     throw new LoginException("O registro do usuário "+userAccount.getUsername()+" ainda não foi aprovado!");
@@ -65,5 +71,4 @@ public class LoginServiceImpl implements LoginService {
             }
         }
     }
-
 }

@@ -14,7 +14,6 @@ import br.edu.ifpb.praticas.quickserv.shared.enums.RegisterRequestStatus;
  */
 public interface ProfessionalDAO extends DAO<Professional> {
     
-    void updateRegisterRequestStatus(String professionalCpf, RegisterRequestStatus status);
     boolean isCpfInUse(String cpf);
     Professional getByUsername(String username);
 }

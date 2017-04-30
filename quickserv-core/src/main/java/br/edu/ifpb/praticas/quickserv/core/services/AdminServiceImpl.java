@@ -5,13 +5,17 @@
  */
 package br.edu.ifpb.praticas.quickserv.core.services;
 
+import br.edu.ifpb.praticas.quickserv.core.dao.interfaces.AdminDAO;
 import br.edu.ifpb.praticas.quickserv.core.dao.interfaces.DAO;
 import br.edu.ifpb.praticas.quickserv.core.dao.interfaces.ProfessionalDAO;
+import br.edu.ifpb.praticas.quickserv.core.dao.interfaces.RegisterRequestDAO;
 import br.edu.ifpb.praticas.quickserv.shared.domain.Professional;
+import br.edu.ifpb.praticas.quickserv.shared.domain.RegisterRequest;
 import br.edu.ifpb.praticas.quickserv.shared.domain.UserAccount;
 import br.edu.ifpb.praticas.quickserv.shared.enums.RegisterRequestStatus;
 import br.edu.ifpb.praticas.quickserv.shared.services.interfaces.AdminService;
 import javax.ejb.EJB;
+import javax.ejb.EJBException;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 
@@ -19,25 +23,47 @@ import javax.ejb.Stateless;
  *
  * @author Pedro Arthur
  */
-
 @Remote(AdminService.class)
 @Stateless
 public class AdminServiceImpl implements AdminService {
-    
+
     @EJB
-    private DAO<UserAccount> adminDAO;
+    private AdminDAO adminDAO;
     @EJB
-    private ProfessionalDAO professionalDAO;
+    private RegisterRequestDAO registerRequestDAO;
 
     @Override
     public void save(UserAccount user) {
-        adminDAO.persist(user);
+        try {
+            validate(user);
+            adminDAO.persist(user);
+        } catch (IllegalArgumentException ex) {
+            throw new EJBException(ex);
+        }
+    }
+
+    private void validate(UserAccount user) {
+        if (user == null) {
+            throw new IllegalArgumentException("Você precisa passar um usuário admin válido");
+        }
     }
 
     @Override
-    public void approveSolicitation(Professional professional, boolean approve) {
-        professionalDAO.updateRegisterRequestStatus(professional.getCpf(),
-                approve ? RegisterRequestStatus.ACCEPTED : RegisterRequestStatus.DENIED);
+    public void approveSolicitation(RegisterRequest registerRequest, boolean approve) {
+        try {
+            validate(registerRequest);
+            registerRequest.setStatus(approve
+                    ? RegisterRequestStatus.ACCEPTED : RegisterRequestStatus.DENIED);
+            registerRequestDAO.update(registerRequest);
+        } catch (IllegalArgumentException ex) {
+            throw new EJBException(ex);
+        }
     }
-    
+
+    private void validate(RegisterRequest registerRequest) {
+        if (!registerRequestDAO.isPendent(registerRequest.getId())) {
+            throw new IllegalArgumentException("The request was already responded!");
+        }
+    }
+
 }

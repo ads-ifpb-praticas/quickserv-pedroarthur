@@ -1,0 +1,12 @@
+UserAccount:
+    - username: "pedro@email.com"
+      actived: false
+      password: 123456
+      photo: [NULL]
+      role: PROFESSIONAL
+    - username: "pedro@email.com"
+      actived: false
+      password: 123456
+      photo: [NULL]
+      role: PROFESSIONAL
+    

@@ -28,6 +28,13 @@ public class ClientServiceImpl implements ClientService {
     @EJB
     private ClientDAO clientDAO;
 
+    public ClientServiceImpl(ClientDAO clientDAO) {
+        this.clientDAO = clientDAO;
+    }
+
+    public ClientServiceImpl() {
+    }
+
     @Override
     public void save(Client client) {
         try {
@@ -51,7 +58,6 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Client getByUserAccount(UserAccount userAccount) {
-        System.out.println("UserAccount: "+userAccount);
         try {
             return getByUsername(userAccount.getUsername());
         } catch (UserNotFoundException ex) {
@@ -61,7 +67,6 @@ public class ClientServiceImpl implements ClientService {
     
     private Client getByUsername(String username) throws UserNotFoundException {
         Client found = clientDAO.getByUsername(username);
-        System.out.println("Client found: "+found);
         if(found == null)
             throw new UserNotFoundException("There isn't Clients with the username \""+username+"\"!");
         return found;
