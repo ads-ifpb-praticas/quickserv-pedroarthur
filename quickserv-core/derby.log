@@ -1,7 +1,7 @@
 ----------------------------------------------------------------
-Sun Apr 30 05:14:45 GFT 2017:
- Inicializando o Derby versão The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instância a816c00e-015b-bded-1c4d-00000379e860
-no diretório de banco de dados C:\Users\Taywens\AppData\Local\Temp\gfembed4551158348284440113tmp\lib\databases\ejbtimer 
+Sun Apr 30 06:21:22 GFT 2017:
+ Inicializando o Derby versão The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instância a816c00e-015b-be2a-1b7f-000003dec3d0
+no diretório de banco de dados C:\Users\Taywens\AppData\Local\Temp\gfembed7541672433518965936tmp\lib\databases\ejbtimer 
 
 java.vendor=Oracle Corporation
 java.runtime.version=1.8.0_45-b15
@@ -10,4 +10,3 @@ os.name=Windows 8.1
 os.arch=amd64
 os.version=6.3
 derby.system.home=null
-Carregador de classe do banco de dados iniciado - derby.database.classpath=''
