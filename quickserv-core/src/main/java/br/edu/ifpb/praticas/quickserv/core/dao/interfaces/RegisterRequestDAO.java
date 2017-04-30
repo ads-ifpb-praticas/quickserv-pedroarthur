@@ -16,4 +16,5 @@ public interface RegisterRequestDAO extends DAO<RegisterRequest> {
     
     List<RegisterRequest> listAllOrderedByDateDesc();
     RegisterRequest getUserLastRegisterRequest(String username);
+    boolean isPendent(Long registerRequestId);
 }

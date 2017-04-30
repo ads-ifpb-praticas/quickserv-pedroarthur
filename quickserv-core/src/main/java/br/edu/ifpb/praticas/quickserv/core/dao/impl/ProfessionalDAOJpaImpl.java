@@ -38,15 +38,6 @@ public class ProfessionalDAOJpaImpl implements ProfessionalDAO {
     public void update(Professional professional) {
         em.merge(professional);
     }
-
-    @Override
-    public void updateRegisterRequestStatus(String professionalCpf, RegisterRequestStatus status) {
-        
-        Professional found = getByCpf(professionalCpf);
-        found.setStatus(status);
-        
-        em.merge(found);
-    }
     
     private Professional getByCpf(String cpf) {
         return em.find(Professional.class, cpf);

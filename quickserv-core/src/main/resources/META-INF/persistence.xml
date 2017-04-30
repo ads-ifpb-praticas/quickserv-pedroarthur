@@ -17,6 +17,7 @@
       <property name="eclipselink.logging.parameters" value="true"/>
       <property name="eclipselink.weaving" value="static"/>
       <property name="eclipselink.query-results-cache" value="false"/>
+      <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
     </properties>
   </persistence-unit>
 </persistence>

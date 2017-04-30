@@ -36,7 +36,13 @@ and open the template in the editor.
                                 <li class="active">
                                     <a href="#">Solicitações </a>
                                 </li>
-                                <li><a href="#">Propostas <span class="badge">9</span></a></li>
+                                <li>
+                                    <h:link value="Propostas" outcome="proposals.xhtml">
+                                        <span class="badge">
+                                            #{serviceProposalCtrl.countByProfessional(professionalCtrl.loggedProfessional)}
+                                        </span>
+                                    </h:link>
+                                </li>
                                 <li><a href="#">Serviços <span class="badge">15</span></a></li>
                                 <li class="dropdown open">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -109,12 +115,20 @@ and open the template in the editor.
                                                 #{serviceRequest.locate.city}, 
                                                 #{serviceRequest.locate.neighborhood}
                                             </blockquote>
-                                            <button class="btn btn-primary btn-xs">Enviar Proposta</button>
-                                            <button class="btn btn-primary btn-xs">Ver Detalhes</button>
+                                            <h:form>
+                                                <h:commandButton id="beginSaveBtn" class="btn btn-primary btn-xs" value="Enviar Proposta" action="#{serviceProposalCtrl.beginSave(serviceRequest)}">
+                                                    <f:ajax execute="@this"
+                                                            render="newProposalForm"
+                                                            onevent="openNewProposalModal"/>
+                                                </h:commandButton>
+
+                                                <button class="btn btn-primary btn-xs">Ver Detalhes</button>
+                                            </h:form>
                                         </div>
                                     </div>
                                 </article>
                             </ui:repeat>
+
 
                             <h:panelGroup rendered="#{not empty serviceRequestCtrl.searchResult}">
                                 <article class="timeline-entry begin">
@@ -128,10 +142,111 @@ and open the template in the editor.
                         </div>
 
                     </div>
-
-
                 </div>
             </div>
+
+            <div id="newProposalModal" class="modal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <h:form id="newProposalForm">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                <h4 class="modal-title">Nova Proposta</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>Preencha os campos abaixo para enviar uma proposta para a solicitação de serviço "#{serviceProposalCtrl.serviceRequest.title}"</p>
+                                <div class="form-group">
+                                    <label for="description">Descrição</label>
+                                    <h:inputText id="description" class="form-control" value="#{serviceProposalCtrl.serviceProposal.description}"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="price">Preço</label>
+                                    <h:inputText id="price" class="form-control" value="#{serviceProposalCtrl.serviceProposal.price}"/>
+                                </div>
+                                <div class="jumbotron" style="padding: 20px; border-radius: 5px;">
+                                    <div class="row">   
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="startSuggestedDate">Data sugerida Início</label>
+                                                <h:inputText class="form-control" id="startSuggestedDate" 
+                                                             size="20" 
+                                                             a:placeholder="Data sugerida início"
+                                                             value="#{suggestHoursCtrl.period.start}">
+                                                    <f:converter converterId="localDateTimeConverter" />
+                                                </h:inputText>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="endSuggestedDate">Data sugerida Fim</label>
+                                                <h:inputText class="form-control" id="endSuggestedDate" 
+                                                             size="20" 
+                                                             a:placeholder="Data sugerida fim"
+                                                             value="#{suggestHoursCtrl.period.end}">
+                                                    <f:converter converterId="localDateTimeConverter" />
+                                                </h:inputText>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h:commandButton class="btn btn-success btn-sm" value="Adicionar período" action="#{suggestHoursCtrl.addPeriod()}">
+                                        <f:ajax execute="startSuggestedDate endSuggestedDate" render="suggestedHours" />
+                                    </h:commandButton>
+
+                                    <div class="panel panel-primary" style="margin-top: 30px;">
+                                        <div class="panel-heading">
+                                            <h4>Horários adicionados</h4>
+                                        </div>
+                                        <div class="panel-body">
+                                            <h:dataTable id="suggestedHours" 
+                                                         class="table table-striped" 
+                                                         value="#{suggestHoursCtrl.periods}"
+                                                         var="period">
+
+                                                <h:column>
+                                                    <f:facet name="header">Data Sugerida Início</f:facet>
+                                                    <h:outputText value="#{period.start}">
+                                                        <f:converter converterId="localDateTimeConverter"/>
+                                                    </h:outputText>
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header">Data Sugerida Fim</f:facet>
+                                                    <h:outputText value="#{period.end}">
+                                                        <f:converter converterId="localDateTimeConverter"/>
+                                                    </h:outputText>
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header">Remover</f:facet>
+                                                    <h:commandButton class="btn btn-danger btn-xs" 
+                                                                     value="remover" >
+                                                        <f:ajax execute="@this" render="@form" 
+                                                                listener="#{suggestHoursCtrl.removePeriod(period)}" />
+                                                    </h:commandButton>
+                                                </h:column>
+
+                                            </h:dataTable>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <h:commandButton class="btn btn-primary" 
+                                                 value="Enviar proposta"
+                                                 action="#{serviceProposalCtrl.save(professionalCtrl.loggedProfessional)}">
+                                </h:commandButton>
+                            </div>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+            
+            <h:panelGroup layout="block" rendered="${not empty facesContext.getMessageList('serviceProposalMsg')}">
+                <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" id="successModal">
+                    <div class="modal-dialog modal-sm" role="document">
+                        <h:messages class="list-unstyled" infoClass="alert alert-success" errorClass="alert alert-danger" layout="block"/>
+                    </div>	 
+                </div>
+            </h:panelGroup> 
         </ui:define>
     </ui:composition>
 </html>

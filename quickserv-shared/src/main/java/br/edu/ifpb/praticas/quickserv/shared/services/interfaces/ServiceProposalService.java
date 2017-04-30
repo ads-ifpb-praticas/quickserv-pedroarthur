@@ -5,6 +5,7 @@
  */
 package br.edu.ifpb.praticas.quickserv.shared.services.interfaces;
 
+import br.edu.ifpb.praticas.quickserv.shared.domain.Professional;
 import br.edu.ifpb.praticas.quickserv.shared.domain.ServiceProposal;
 import br.edu.ifpb.praticas.quickserv.shared.domain.ServiceRequest;
 import java.util.List;
@@ -18,4 +19,6 @@ public interface ServiceProposalService {
     List<ServiceProposal> listByServiceRequest(ServiceRequest serviceRequest);
     void save(ServiceProposal serviceProposal);
     void update(ServiceProposal serviceProposal);
+    List<ServiceProposal> listByProfessional(Professional professional);
+    Long countByProfessional(Professional professional);
 }

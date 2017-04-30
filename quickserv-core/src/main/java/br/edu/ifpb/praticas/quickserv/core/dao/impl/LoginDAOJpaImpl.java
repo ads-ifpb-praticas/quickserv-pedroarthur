@@ -6,11 +6,8 @@
 package br.edu.ifpb.praticas.quickserv.core.dao.impl;
 
 import br.edu.ifpb.praticas.quickserv.core.dao.interfaces.LoginDAO;
-import br.edu.ifpb.praticas.quickserv.shared.domain.RegisterRequest;
 import br.edu.ifpb.praticas.quickserv.shared.domain.UserAccount;
-import br.edu.ifpb.praticas.quickserv.shared.enums.RegisterRequestStatus;
 import java.util.List;
-import javafx.animation.Animation.Status;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;

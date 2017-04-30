@@ -31,4 +31,9 @@
     <welcome-file-list>
         <welcome-file>faces/index.xhtml</welcome-file>
     </welcome-file-list>
+<!--    
+    <error-page>
+        <error-code>401</error-code>
+        <location>/faces/error-pages/unauthorized.xhtml</location>
+    </error-page>-->
 </web-app>

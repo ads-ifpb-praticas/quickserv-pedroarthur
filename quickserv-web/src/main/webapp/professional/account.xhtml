@@ -34,10 +34,16 @@ and open the template in the editor.
                     <div class="collapse navbar-collapse" id="rhecruta-navbar">
                         <h:form>
                             <ul class="nav navbar-nav navbar-right">
-                                <li class="active">
-                                    <a href="#">Solicitações </a>
+                                <li>
+                                    <a href="home.xhtml">Solicitações </a>
                                 </li>
-                                <li><a href="#">Propostas <span class="badge">9</span></a></li>
+                                <li>
+                                    <h:link value="Propostas" outcome="proposals.xhtml">
+                                        <span class="badge">
+                                            #{serviceProposalCtrl.countByProfessional(professionalCtrl.loggedProfessional)}
+                                        </span>
+                                    </h:link>
+                                </li>
                                 <li><a href="#">Serviços <span class="badge">15</span></a></li>
                                 <li class="dropdown open active">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -80,7 +86,7 @@ and open the template in the editor.
                                                 <label for="cpf">CPF</label>
                                                 <h:inputText disabled="true" class="form-control" id="cpf" a:placeholder="CPF" value="#{professionalCtrl.updatableProfessional.cpf}"/>
                                                 <label for="username">E-mail</label>
-                                                <h:inputText class="form-control" id="username" a:placeholder="E-mail" value="#{professionalCtrl.updatableProfessional.userAccount.username}"/>
+                                                <h:inputText disabled="true" class="form-control" id="username" a:placeholder="E-mail" value="#{professionalCtrl.updatableProfessional.userAccount.username}"/>
                                                 <label for="password">Senha</label>
                                                 <h:inputSecret class="form-control" id="password" a:placeholder="Senha" value="#{professionalCtrl.updatableProfessional.userAccount.password}"/>
                                                 <div class="form-group">

@@ -5,10 +5,8 @@
  */
 package br.edu.ifpb.praticas.quickserv.core.services;
 
-import br.edu.ifpb.praticas.quickserv.core.dao.interfaces.DAO;
 import br.edu.ifpb.praticas.quickserv.core.dao.interfaces.ProfessionalDAO;
 import br.edu.ifpb.praticas.quickserv.core.dao.interfaces.RegisterRequestDAO;
-import br.edu.ifpb.praticas.quickserv.shared.domain.Client;
 import br.edu.ifpb.praticas.quickserv.shared.domain.Professional;
 import br.edu.ifpb.praticas.quickserv.shared.domain.RegisterRequest;
 import br.edu.ifpb.praticas.quickserv.shared.domain.UserAccount;
@@ -16,8 +14,6 @@ import br.edu.ifpb.praticas.quickserv.shared.enums.RegisterRequestStatus;
 import br.edu.ifpb.praticas.quickserv.shared.exceptions.UserNotFoundException;
 import br.edu.ifpb.praticas.quickserv.shared.services.interfaces.ProfessionalService;
 import java.time.LocalDateTime;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Remote;
@@ -38,13 +34,23 @@ public class ProfessionalServiceImpl implements ProfessionalService {
     @EJB
     private RegisterRequestDAO registerRequestDAO;
 
+    public ProfessionalServiceImpl(ProfessionalDAO professionalDAO, RegisterRequestDAO registerRequestDAO) {
+        this.professionalDAO = professionalDAO;
+        this.registerRequestDAO = registerRequestDAO;
+    }
+
+    public ProfessionalServiceImpl() {
+        
+    }
+
+    //Test
     @Override
     public void save(Professional professional) {
         try {
             validate(professional);
             registerRequestDAO.persist(create(professional));
             professionalDAO.persist(professional);
-        } catch (EntityExistsException ex) {
+        } catch (EntityExistsException | IllegalArgumentException ex) {
             throw new EJBException(ex);
         }
     }
@@ -66,11 +72,14 @@ public class ProfessionalServiceImpl implements ProfessionalService {
     }
     
     private void validate(Professional professional) {
+        if(professional == null)
+            throw new IllegalArgumentException("You have to passa a professional instance to save!");
         if(professionalDAO.isCpfInUse(professional.getCpf())) {
             throw new EntityExistsException("O CPF está em uso. Por favor, insira um outro cpf e tente novamente!");
         } 
     }
 
+    //Test  
     @Override
     public Professional getByUser(UserAccount account) {
         System.out.println("[ProfessionalServiceImpl] User Account: "+account);

@@ -5,7 +5,7 @@
  */
 package br.edu.ifpb.praticas.quickserv.shared.services.interfaces;
 
-import br.edu.ifpb.praticas.quickserv.shared.domain.Professional;
+import br.edu.ifpb.praticas.quickserv.shared.domain.RegisterRequest;
 import br.edu.ifpb.praticas.quickserv.shared.domain.UserAccount;
 
 /**
@@ -15,5 +15,5 @@ import br.edu.ifpb.praticas.quickserv.shared.domain.UserAccount;
 public interface AdminService {
     
     void save(UserAccount user);
-    void approveSolicitation(Professional professional, boolean approve);
+    void approveSolicitation(RegisterRequest registerRequest, boolean approve);
 }

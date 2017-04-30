@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Sun Apr 30 01:23:10 GFT 2017:
+ Inicializando o Derby versão The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instância a816c00e-015b-bd19-1a0a-000004365878
+no diretório de banco de dados C:\Users\Taywens\AppData\Local\Temp\gfembed4119470109021950006tmp\lib\databases\ejbtimer 
+
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_45-b15
+user.dir=C:\Users\Taywens\Documents\NetBeansProjects\Práticas\Quickserv\quickserv\quickserv-core
+os.name=Windows 8.1
+os.arch=amd64
+os.version=6.3
+derby.system.home=null
+Carregador de classe do banco de dados iniciado - derby.database.classpath=''
