@@ -119,9 +119,6 @@
                         </goals>
                         <phase>integration-test</phase>
                         <configuration> 
-                            <excludes>
-                                <exclude>**/*Test.java</exclude>
-                            </excludes>
                             <includes>
                                 <include>**/*IT.java</include>
                             </includes>
