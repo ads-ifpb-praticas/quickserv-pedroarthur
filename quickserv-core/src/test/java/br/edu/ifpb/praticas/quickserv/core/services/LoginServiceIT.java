@@ -34,7 +34,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(Arquillian.class)
 @Cleanup(phase = TestExecutionPhase.AFTER, strategy = CleanupStrategy.USED_ROWS_ONLY)
-public class LoginServiceIntegrationTest {
+public class LoginServiceIT {
     
     @EJB
     private LoginService loginService;
