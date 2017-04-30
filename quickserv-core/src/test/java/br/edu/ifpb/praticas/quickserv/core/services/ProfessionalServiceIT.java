@@ -41,7 +41,7 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 @Cleanup(phase = TestExecutionPhase.AFTER, strategy = CleanupStrategy.USED_ROWS_ONLY)
 @UsingDataSet("datasets/Professional.yml")
-public class ProfessionalServiceIntegrationTest {
+public class ProfessionalServiceIT {
     
     @EJB
     private ProfessionalService professionalService;

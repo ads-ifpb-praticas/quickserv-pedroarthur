@@ -39,7 +39,7 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 @Cleanup(phase = TestExecutionPhase.AFTER, strategy = CleanupStrategy.USED_ROWS_ONLY)
 @UsingDataSet("datasets/Admin.yml")
-public class AdminServiceIntegrationTest {
+public class AdminServiceIT {
     
     @EJB
     private AdminService adminService;
