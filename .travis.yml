@@ -3,3 +3,8 @@ jdk:
   oraclejdk8
 install: mvn install -U -DskipTests=true
 script: mvn integration-test verify -Ptest
+services:
+  - postgresql
+before_script:
+  - psql -c "CREATE DATABASE quickserv;" -U postgres
+  - psql -c "ALTER USER postgres WITH PASSWORD '123456';" -U postgres
