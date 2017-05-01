@@ -9,6 +9,10 @@ function openNewProposalModal(event) {
     $('#newProposalModal').modal('show');
 }
 
+function openProposalsModal(event) {
+    $('#proposalsModal').modal('show');
+}
+
 $(document).ready(function() {
     $('#successModal').modal('show');
 });

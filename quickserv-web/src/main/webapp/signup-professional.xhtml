@@ -51,24 +51,51 @@
                             </div>
                             <div class="panel-body">
                                 <h:messages class="list-unstyled" 
-                                    infoClass="alert alert-success"
-                                    errorClass="alert alert-danger"/>
+                                            infoClass="alert alert-success"
+                                            errorClass="alert alert-danger"
+                                            rendered="#{not empty facesContext.getMessageList('ProfessionalMsg')}"/>
+                                
                                 <h:form id="form-signup" class="form" enctype="multipart/form-data">
-                                    <label for="username">E-mail</label>
-                                    <h:inputText class="form-control" id="username" a:placeholder="E-mail" value="#{professionalCtrl.account.username}"/>
-                                    <label for="password">Senha</label>
-                                    <h:inputSecret class="form-control" id="password" a:placeholder="Senha" value="#{professionalCtrl.account.password}"/>
-                                    <label for="userPhoto">Sua Foto</label>
-                                    <h:inputFile class="form-control" id="userPhotoInput" value="#{professionalCtrl.userPhotoPart}" />
-                                    <label for="firstname">Nome</label>
-                                    <h:inputText class="form-control" id="firstname" a:placeholder="Nome" value="#{professionalCtrl.professional.firstname}"/>
-                                    <label for="lastname">Sobrenome</label>
-                                    <h:inputText class="form-control" id="lastname" a:placeholder="Sobrenome" value="#{professionalCtrl.professional.lastname}"/>
-                                    <label for="cpf">CPF</label>
-                                    <h:inputText class="form-control" id="cpf" a:placeholder="CPF" value="#{professionalCtrl.professional.cpf}"/>
-                                    <label for="documentPhoto">Foto do documento</label>
-                                    <h:inputFile class="form-control" id="documentPhotoInput" value="#{professionalCtrl.documentPhotoPart}">
-                                    </h:inputFile> 
+                                    <div class="form-group">
+                                        <label for="username">E-mail</label>
+                                        <h:inputText class="form-control" id="username" a:placeholder="E-mail" value="#{professionalCtrl.account.username}"/>
+                                        <h:message for="username" styleClass="error-color" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password">Senha</label>
+                                        <h:inputSecret class="form-control" id="password" a:placeholder="Senha" value="#{professionalCtrl.account.password}"/>
+                                        <h:message for="password" styleClass="error-color" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="userPhoto">Sua Foto</label>
+                                        <h:inputFile class="form-control" id="userPhotoInput" value="#{professionalCtrl.userPhotoPart}" />
+                                        <h:message for="userPhoto" styleClass="error-color" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="firstname">Nome</label>
+                                        <h:inputText class="form-control" id="firstname" a:placeholder="Nome" value="#{professionalCtrl.professional.firstname}"/>
+                                        <h:message for="firstname" styleClass="error-color" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="lastname">Nome</label>
+                                        <h:inputText class="form-control" id="lastname" a:placeholder="Sobrenome" value="#{professionalCtrl.professional.lastname}"/>
+                                        <h:message for="lastname" styleClass="error-color" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cpf">CPF</label>
+                                        <h:inputText class="form-control" id="cpf" a:placeholder="CPF" value="#{professionalCtrl.professional.cpf}"/>
+                                        <h:messages for="cpf" class="list-unstyled" styleClass="error-color" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="phone">Telefone ou Celular</label>
+                                        <h:inputText class="form-control" id="phone" a:placeholder="Telefone ou Celular" value="#{professionalCtrl.professional.phone}"/>
+                                        <h:message for="phone" styleClass="error-color" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="documentPhoto">Foto do documento</label>
+                                        <h:inputFile class="form-control" id="documentPhotoInput" value="#{professionalCtrl.documentPhotoPart}">
+                                        </h:inputFile> 
+                                    </div>
                                     <h:commandButton class="btn btn-primary" id="signin" action="#{professionalCtrl.saveProfessional()}" value="Cadastrar" />
                                 </h:form>
                             </div>

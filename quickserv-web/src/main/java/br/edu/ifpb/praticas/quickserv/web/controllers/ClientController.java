@@ -21,6 +21,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
+import javax.validation.Valid;
 import org.apache.commons.io.IOUtils;
 
 /**
@@ -37,6 +38,7 @@ public class ClientController {
     
     private Client client;
     private UserAccount account;
+    @Valid
     private Address address;
     
     private Client updatableClient;

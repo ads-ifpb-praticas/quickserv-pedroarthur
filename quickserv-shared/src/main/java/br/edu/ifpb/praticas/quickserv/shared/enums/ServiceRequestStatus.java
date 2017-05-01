@@ -11,7 +11,10 @@ package br.edu.ifpb.praticas.quickserv.shared.enums;
  */
 public enum ServiceRequestStatus {
     
-    SOLVED("Resolvido"), PENDENT("Pendente");
+    NOT_SOLVED("Não resolveu"), 
+    SOLVED("Resolvido"), 
+    IN_PROGRESS("Em Progresso"), 
+    PENDENT("Pendente");
     
     private final String description;
 

@@ -50,7 +50,7 @@ and open the template in the editor.
                                         <li><h:link value="Nova Solicitação" outcome="new-solicitation.xhtml"></h:link></li>
                                     </ul>
                                 </li>
-                                <li><a href="#">Serviços <span class="label label-success">15</span></a></li>
+                                <li><a href="#">Serviços <span class="label label-success">#{serviceCtrl.countByClient(clientCtrl.loggedClient)}</span></a></li>
                                 <li class="dropdown open">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                         Welcome, #{clientCtrl.loggedClient.firstname}!
@@ -78,7 +78,7 @@ and open the template in the editor.
                         <div class="col-md-8 col-md-offset-2">
                             <h:messages class="list-unstyled" 
                                     infoClass="alert alert-success"
-                                    errorClass="alert alert-danger"/>
+                                    errorClass="alert alert-danger" rendered="#{not empty facesContext.getMessageList('serviceRequestMsg')}"/>
                             <h4>Nova solicitação de serviço</h4>
                             <p>Preencha todos os campos abaixo para solicitar um novo serviço!</p>
                             <h:form>
@@ -87,12 +87,14 @@ and open the template in the editor.
                                     <h:inputText a:placeholder="Título" class="form-control" 
                                                  id="title" 
                                                  value="#{serviceRequestCtrl.serviceRequest.title}" />
+                                    <h:message for="title" styleClass="error-color"/>
                                 </div>
                                 <div class="form-group">
-                                    <label for="title">Descrição</label>
+                                    <label for="description">Descrição</label>
                                     <h:inputTextarea a:placeholder="Descrição" class="form-control" 
                                                      id="description" 
                                                      value="#{serviceRequestCtrl.serviceRequest.description}" />
+                                    <h:message for="description" styleClass="error-color"/>
                                 </div>
                                 <div class="form-group">
                                     <label for="type">Tipo</label>
@@ -105,16 +107,18 @@ and open the template in the editor.
                                 </div>
                                 
                                 <div class="form-group">
-                                    <label for="title">País</label>
+                                    <label for="country">País</label>
                                     <h:inputText a:placeholder="País" class="form-control" 
                                                  id="country" 
                                                  value="#{serviceRequestCtrl.address.country}" />
+                                     <h:message for="country" styleClass="error-color"/>
                                 </div>
                                 <div class="form-group">
-                                    <label for="title">Estado</label>
+                                    <label for="state">Estado</label>
                                     <h:inputText a:placeholder="Estado" class="form-control" 
                                                  id="state" 
                                                  value="#{serviceRequestCtrl.address.state}" />
+                                    <h:message for="state" styleClass="error-color"/>
                                 </div>
                                 <div class="form-group">
                                     <label for="title">Cidade</label>
@@ -123,38 +127,49 @@ and open the template in the editor.
                                                  value="#{serviceRequestCtrl.address.city}" />
                                 </div>
                                 <div class="form-group">
-                                    <label for="title">Bairro</label>
+                                    <label for="neighborhood">Bairro</label>
                                     <h:inputText a:placeholder="Bairro" class="form-control" 
                                                  id="neighborhood" 
                                                  value="#{serviceRequestCtrl.address.neighborhood}" />
+                                    <h:message for="neighborhood" styleClass="error-color"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="street">Rua</label>
+                                    <h:inputText a:placeholder="Rua" class="form-control" 
+                                                 id="street" 
+                                                 value="#{serviceRequestCtrl.address.street}" />
+                                    <h:message for="street" styleClass="error-color"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="number">Número</label>
+                                    <h:inputText a:placeholder="Número" class="form-control" 
+                                                 id="number" 
+                                                 value="#{serviceRequestCtrl.address.number}" />
+                                    <h:message for="number" styleClass="error-color"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="complement">Complemento</label>
+                                    <h:inputText a:placeholder="Complemento" class="form-control" 
+                                                 id="complement" 
+                                                 value="#{serviceRequestCtrl.address.complemento}" />
+                                    <h:message for="complement" styleClass="error-color"/>
                                 </div>
                                 
                                 <div class="jumbotron">
                                     <div class="row">   
-                                        <div class="col-md-6">
+                                        <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="startSuggestedDate">Data sugerida Início</label>
                                                 <h:inputText class="form-control" id="startSuggestedDate" 
                                                              size="20" 
-                                                             a:placeholder="Data sugerida início"
-                                                             value="#{suggestHoursCtrl.period.start}">
-                                                    <f:converter converterId="localDateTimeConverter" />
-                                                </h:inputText>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="endSuggestedDate">Data sugerida Fim</label>
-                                                <h:inputText class="form-control" id="endSuggestedDate" 
-                                                             size="20" 
-                                                             a:placeholder="Data sugerida fim"
-                                                             value="#{suggestHoursCtrl.period.end}">
+                                                             a:placeholder="Data Sugerida"
+                                                             value="#{suggestHoursCtrl.dateTime}">
                                                     <f:converter converterId="localDateTimeConverter" />
                                                 </h:inputText>
                                             </div>
                                         </div>
                                     </div>
-                                    <h:commandButton class="btn btn-success btn-sm" value="Adicionar período" action="#{suggestHoursCtrl.addPeriod()}" />
+                                    <h:commandButton class="btn btn-success btn-sm" value="Adicionar Data" action="#{suggestHoursCtrl.addDateTime()}" />
 
                                     <div class="panel panel-primary" style="margin-top: 30px;">
                                         <div class="panel-heading">
@@ -163,26 +178,20 @@ and open the template in the editor.
                                         <div class="panel-body">
                                             <table class="table table-striped">
                                                 <thead>
-                                                    <th>Data Sugerida Início</th>
-                                                    <th>Data Sugerida Fim</th>
+                                                    <th>Data Sugerida</th>
                                                     <th>Remover</th>
                                                 </thead>
                                                 <tbody>
-                                                    <ui:repeat var="period" value="#{suggestHoursCtrl.periods}">
+                                                    <ui:repeat var="dateTime" value="#{suggestHoursCtrl.dateTimes}">
                                                         <tr>
                                                             <td>
-                                                                <h:outputText value="#{period.start}">
-                                                                    <f:converter converterId="localDateTimeConverter"/>
-                                                                </h:outputText>
-                                                            </td>
-                                                            <td>
-                                                                <h:outputText value="#{period.end}">
+                                                                <h:outputText value="#{dateTime}">
                                                                     <f:converter converterId="localDateTimeConverter"/>
                                                                 </h:outputText>
                                                             </td>
                                                             <td><h:commandButton class="btn btn-danger btn-xs" 
                                                                                  value="remover" 
-                                                                                 action="#{suggestHoursCtrl.removePeriod(period)}" />
+                                                                                 action="#{suggestHoursCtrl.removeDateTime(dateTime)}" />
                                                             </td>
                                                         </tr>
                                                     </ui:repeat>

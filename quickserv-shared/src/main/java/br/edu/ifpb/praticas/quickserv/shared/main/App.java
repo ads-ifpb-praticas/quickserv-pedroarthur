@@ -6,14 +6,13 @@
 package br.edu.ifpb.praticas.quickserv.shared.main;
 
 import br.edu.ifpb.praticas.quickserv.shared.domain.Client;
-import br.edu.ifpb.praticas.quickserv.shared.domain.Period;
 import br.edu.ifpb.praticas.quickserv.shared.domain.Professional;
 import br.edu.ifpb.praticas.quickserv.shared.domain.Service;
 import br.edu.ifpb.praticas.quickserv.shared.domain.ServiceProposal;
 import br.edu.ifpb.praticas.quickserv.shared.domain.ServiceRequest;
 import br.edu.ifpb.praticas.quickserv.shared.domain.ServiceType;
 import br.edu.ifpb.praticas.quickserv.shared.domain.UserAccount;
-import br.edu.ifpb.praticas.quickserv.shared.enums.Avaliation;
+import br.edu.ifpb.praticas.quickserv.shared.enums.Evaluation;
 import br.edu.ifpb.praticas.quickserv.shared.enums.RegisterRequestStatus;
 import br.edu.ifpb.praticas.quickserv.shared.enums.UserRole;
 import br.edu.ifpb.praticas.quickserv.shared.exceptions.LoginException;
@@ -44,33 +43,33 @@ public class App {
 //        persistUser("pedroviniv@gmail.com", "123456", true, em);
         persistClient("pedroviniv@gmail.com", "123456", true, "111.222.333-44", "Pedro Arthur", "Fernandes de Vasconcelos", em);
         
-        List<Period> periods = new ArrayList<>();
-        periods.add(new Period(LocalDateTime.now(), LocalDateTime.now().plusHours(2)));
-        periods.add(new Period(LocalDateTime.now().plusHours(3), LocalDateTime.now().plusHours(3).plusHours(2)));
-        persistServiceRequest(em, "Preciso de X", "Preciso de X amanhã", ServiceType.PAINT, "111.222.333-44", periods);;
+//        List<Period> periods = new ArrayList<>();
+//        periods.add(new Period(LocalDateTime.now(), LocalDateTime.now().plusHours(2)));
+//        periods.add(new Period(LocalDateTime.now().plusHours(3), LocalDateTime.now().plusHours(3).plusHours(2)));
+        persistServiceRequest(em, "Preciso de X", "Preciso de X amanhã", ServiceType.PAINT, "111.222.333-44", null);
         
         ServiceRequest request = getServiceRequestById(1L, em);
 
-        request.addSuggestedDate(new Period(LocalDateTime.now().plusHours(10), LocalDateTime.now().plusHours(10).plusHours(2)));
+//        request.addSuggestedDate(new Period(LocalDateTime.now().plusHours(10), LocalDateTime.now().plusHours(10).plusHours(2)));
         updateServiceRequest(request, em);
         
-        for(Period period : request.getSuggestedDates()) {
-            System.out.println("Entre "+format(period.getStart())+" e "+format(period.getEnd()));
-        }
+//        for(Period period : request.getSuggestedDates()) {
+//            System.out.println("Entre "+format(period.getStart())+" e "+format(period.getEnd()));
+//        }
         persistProfessional("luanda@gmail.com", "123456",
                 true, "222.333.444-55", "Luanda Maria", "Sousa da Silva",
                 "imgs/22233344455/perfil.jpg", RegisterRequestStatus.ACCEPTED, 
                 em);
-        persistServiceProposal("Resolverei o problema X", 100D, 
-                "222.333.444-55", 1L, periods, em);
+//        persistServiceProposal("Resolverei o problema X", 100D, 
+//                "222.333.444-55", 1L, periods, em);
         ServiceProposal proposal = getServiceProposalById(1L, em);
-        proposal.addSuggestedDate(new Period(LocalDateTime.now().plusHours(10), LocalDateTime.now().plusHours(10).plusHours(2)));
+//        proposal.addSuggestedDate(new Period(LocalDateTime.now().plusHours(10), LocalDateTime.now().plusHours(10).plusHours(2)));
 
         updateServiceProposal(proposal, em);
         
-        persistService(1L, 1L, new Period(LocalDateTime.now().plusHours(10), LocalDateTime.now().plusHours(10).plusHours(2)), em);
+//        persistService(1L, 1L, new Period(LocalDateTime.now().plusHours(10), LocalDateTime.now().plusHours(10).plusHours(2)), em);
         Service service = getServiceById(new ServicePK(1L, 1L), em);
-        service.setAvaliation(Avaliation.LIKE);
+        service.setEvaluation(Evaluation.LIKE);
         updateService(service, em);
     }
     
@@ -88,18 +87,18 @@ public class App {
     }
     
     private static void persistService(Long serviceReqId, Long servicePropId, 
-            Period period, EntityManager em) {
+            LocalDateTime period, EntityManager em) {
         
         ServiceProposal proposal = getServiceProposalById(servicePropId, em);
         ServiceRequest request = getServiceRequestById(serviceReqId, em);
         
-        Service service = new Service(request, proposal, period);
+        Service service = new Service(request, proposal);
         
         persistObject(service, em);
     }
     
     private static void persistServiceProposal(String desc, Double price, 
-            String professionalCpf, Long serviceReqId, List<Period> periods, EntityManager em) {
+            String professionalCpf, Long serviceReqId, List<LocalDateTime> periods, EntityManager em) {
         
         Professional prof = getProfessionalByCpf(professionalCpf, em);
         ServiceRequest req = getServiceRequestById(serviceReqId, em);
@@ -109,13 +108,13 @@ public class App {
         prop.setPrice(new BigDecimal(price));
         prop.setProfessional(prof);
         prop.setServiceRequest(req);
-        prop.addSuggestedDates(periods);
+//        prop.addSuggestedDates(periods);
         
         persistObject(prop, em);
     }
     
     private static void persistServiceRequest(EntityManager em, String title, String description, 
-            ServiceType type, String clientCpf, List<Period> periods) {
+            ServiceType type, String clientCpf, List<LocalDateTime> periods) {
         
         Client client = getClientByCpf(clientCpf, em);
         

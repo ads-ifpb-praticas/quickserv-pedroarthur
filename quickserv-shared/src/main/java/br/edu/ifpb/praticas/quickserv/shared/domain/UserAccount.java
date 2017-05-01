@@ -16,6 +16,8 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
@@ -27,7 +29,10 @@ import javax.persistence.Table;
 public class UserAccount implements Serializable {
     
     @Id
+    @Email(message = "Insira um E-mail válido")
+    @NotEmpty(message = "Este campo é obrigatório")
     private String username;
+    @NotEmpty(message = "Este campo é obrigatório")
     private String password;
     @Column(nullable = false)
     private boolean actived;

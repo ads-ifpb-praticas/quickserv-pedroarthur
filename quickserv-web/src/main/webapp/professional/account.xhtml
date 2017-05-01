@@ -40,11 +40,11 @@ and open the template in the editor.
                                 <li>
                                     <h:link value="Propostas" outcome="proposals.xhtml">
                                         <span class="badge">
-                                            #{serviceProposalCtrl.countByProfessional(professionalCtrl.loggedProfessional)}
+                                            #{serviceCtrl.countByProfessional(professionalCtrl.loggedProfessional)}
                                         </span>
                                     </h:link>
                                 </li>
-                                <li><a href="#">Serviços <span class="badge">15</span></a></li>
+                                <li><a href="#">Serviços <span class="badge">#{serviceProposalCtrl.countByProfessional(professionalCtrl.loggedProfessional)}</span></a></li>
                                 <li class="dropdown open active">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                         Welcome, #{professionalCtrl.loggedProfessional.firstname}!
@@ -88,7 +88,7 @@ and open the template in the editor.
                                                 <label for="username">E-mail</label>
                                                 <h:inputText disabled="true" class="form-control" id="username" a:placeholder="E-mail" value="#{professionalCtrl.updatableProfessional.userAccount.username}"/>
                                                 <label for="password">Senha</label>
-                                                <h:inputSecret class="form-control" id="password" a:placeholder="Senha" value="#{professionalCtrl.updatableProfessional.userAccount.password}"/>
+                                                <h:inputSecret redisplay="true" class="form-control" id="password" a:placeholder="Senha" value="#{professionalCtrl.updatableProfessional.userAccount.password}"/>
                                                 <div class="form-group">
                                                     <label for="userPhoto">Sua Foto</label>
                                                     <o:graphicImage id="userPhoto" height="128" width="128" class="img-responsive thumbnail" 

@@ -9,13 +9,13 @@ package br.edu.ifpb.praticas.quickserv.shared.enums;
  *
  * @author Pedro Arthur
  */
-public enum Avaliation {
+public enum Evaluation {
     
     LIKE("Gostou"), DISLIKE("Não gostou"), NONE("Sem avaliação");
     
     private final String description;
     
-    Avaliation(String description) {
+    Evaluation(String description) {
         this.description = description;
     }
 

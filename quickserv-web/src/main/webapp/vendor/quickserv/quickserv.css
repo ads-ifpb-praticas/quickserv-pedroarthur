@@ -71,3 +71,11 @@ and open the template in the editor.
 .underline {
     text-decoration: underline;
 }
+
+.error-color {
+    color: #e74c3c;
+}
+
+.btn-group {
+    display: flex !important;
+}

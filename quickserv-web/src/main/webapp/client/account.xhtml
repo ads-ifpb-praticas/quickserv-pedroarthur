@@ -51,7 +51,7 @@ and open the template in the editor.
                                         <li><h:link value="Nova Solicitação" outcome="new-solicitation.xhtml"></h:link></li>
                                     </ul>
                                 </li>
-                                <li><a href="#">Serviços <span class="label label-success">15</span></a></li>
+                                <li><a href="#">Serviços <span class="label label-success">#{serviceCtrl.countByClient(clientCtrl.loggedClient)}</span></a></li>
                                 <li class="dropdown open active">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                         Welcome, #{clientCtrl.loggedClient.firstname}!
