@@ -11,8 +11,8 @@ O Quickserv trata-se de um sistema web que auxilia as pessoas a encontrar profis
 - **RF01** O sistema deve prover uma maneira de um cliente se cadastrar, alterar seus dados e desativar sua conta quando necessário.
 - **RF02** O sistema deve prover uma maneira de um profissional enviar uma solicitação de cadastro, alterar seus dados e desativar sua conta quando necessário.
 - **RF03** Um cadastro de um administrador padrão deve ser realizado automaticamente caso não haja administradores cadastrados.
-- **RF04** Clientes, Profissionais e Administradores devem acessor o sistema através de uma autenticação baseada em e-mail e senha.
-- **RF05** Todo cliente pode registrar a solicitação de um registro informando dados como a descrição, um endereço superficial, o tipo do serviço procurado e sugestão de horários.
+- **RF04** Clientes, Profissionais e Administradores devem acessar o sistema através de uma autenticação baseada em e-mail e senha.
+- **RF05** Todo cliente pode registrar a solicitação de um serviço informando dados como a descrição, o endereço, o tipo do serviço procurado e sugestão de horários.
 - **RF06** Com base em uma solicitação de serviço feita por um cliente, todo profissional poderá registrar uma proposta para o mesmo especificando uma descrição, um valor em R$, e as datas em que o mesmo poderá atender ao cliente.
 - **RF07** Um administrador pode aprovar ou negar a solicitação de cadastro de um profissional. O profissional só poderá acessar o sistema caso o administrador aprove a solicitação.
 - **RF08** Um profissional poderá filtrar solicitações de serviços com base no tipo do serviço solicitado.
