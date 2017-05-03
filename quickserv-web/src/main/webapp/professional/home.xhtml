@@ -43,7 +43,14 @@ and open the template in the editor.
                                         </span>
                                     </h:link>
                                 </li>
-                                <li><a href="#">Serviços <span class="badge">#{serviceCtrl.countByProfessional(professionalCtrl.loggedProfessional)}</span></a></li>
+                                <li>
+                                    <a href="services.xhtml">
+                                        Serviços 
+                                        <span class="badge">
+                                        #{serviceCtrl.countByProfessional(professionalCtrl.loggedProfessional)}
+                                        </span>
+                                    </a>
+                                </li>
                                 <li class="dropdown open">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                         Welcome, #{professionalCtrl.loggedProfessional.firstname}!
@@ -77,7 +84,7 @@ and open the template in the editor.
                                                    itemLabel="#{type.description}"/>
                                 </h:selectOneMenu>
                                 <span class="input-group-btn">
-                                    <h:commandButton class="btn btn-primary" value="Filtrar" action="#{serviceRequestCtrl.listByTypeOrderedByDate()}"/>
+                                    <h:commandButton class="btn btn-primary" value="Filtrar" action="#{serviceRequestCtrl.listPendentRequestsByTypeOrderedByDate()}"/>
                                     <h:commandButton class="btn btn-primary" value="Mostrar Todos" action="#{serviceRequestCtrl.listAllOrderedByDate()}"/>
                                 </span>
                             </div>
@@ -89,6 +96,10 @@ and open the template in the editor.
 
                         <div class="timeline-centered" style="margin-top: 30px;">
 
+                            <h:panelGroup rendered="#{empty serviceRequestCtrl.searchResult}">
+                                <p>Não conseguimos encontrar nenhuma solicitação</p>
+                            </h:panelGroup>
+                            
                             <ui:repeat var="serviceRequest" value="#{serviceRequestCtrl.searchResult}">
                                 <article class="timeline-entry">
                                     <div class="timeline-entry-inner">

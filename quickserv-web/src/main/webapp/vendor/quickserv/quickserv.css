@@ -79,3 +79,7 @@ and open the template in the editor.
 .btn-group {
     display: flex !important;
 }
+
+.table > tbody > tr > td {
+     vertical-align: middle;
+}

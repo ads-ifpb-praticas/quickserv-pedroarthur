@@ -7,10 +7,14 @@ package br.edu.ifpb.praticas.quickserv.web.controllers;
 
 import br.edu.ifpb.praticas.quickserv.shared.domain.Client;
 import br.edu.ifpb.praticas.quickserv.shared.domain.Professional;
+import br.edu.ifpb.praticas.quickserv.shared.domain.Service;
 import br.edu.ifpb.praticas.quickserv.shared.domain.ServiceProposal;
 import br.edu.ifpb.praticas.quickserv.shared.domain.ServiceRequest;
+import br.edu.ifpb.praticas.quickserv.shared.enums.Evaluation;
+import br.edu.ifpb.praticas.quickserv.shared.enums.ServiceRequestStatus;
 import br.edu.ifpb.praticas.quickserv.shared.services.interfaces.ServiceService;
 import java.io.Serializable;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.EJBException;
@@ -84,12 +88,34 @@ public class ServiceController implements Serializable {
         return null;
     }
     
+    public boolean wasEvaluated(Evaluation evaluation) {
+        return evaluation != Evaluation.NONE;
+    }
+    
+    public boolean isSelectedRequestPendent() {
+        return this.selectedServiceRequest.getStatus().equals(ServiceRequestStatus.PENDENT);
+    }
+    
+    public String evaluate(Service service, boolean approved) {
+        this.serviceService
+                .evaluate(service, approved ? Evaluation.LIKE : Evaluation.DISLIKE);
+        return null;
+    }
+    
     public Long countByClient(Client client) {
         return this.serviceService.countByClient(client);
     }
     
     public Long countByProfessional(Professional professional) {
         return this.serviceService.countByProfessional(professional);
+    }
+    
+    public List<Service> listByClient(Client client) {
+        return serviceService.listServicesByClient(client);
+    }
+    
+    public List<Service> listByProfessional(Professional professional) {
+        return serviceService.listServicesByProfessional(professional);
     }
     
     public String close() {

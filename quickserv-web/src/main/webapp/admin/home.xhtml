@@ -7,13 +7,11 @@ and open the template in the editor.
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:o="http://omnifaces.org/ui">
-    
-    <ui:composition template="../template/layout.xhtml">
-        
+
+    <ui:composition template="../templates/layout.xhtml">
         <ui:define name="header">
             <nav class="navbar navbar-default">
                 <div class="container">
@@ -33,19 +31,99 @@ and open the template in the editor.
                         <a class="navbar-brand" href="index.xhtml"><strong class="underline">Quick</strong>Serv</a>
                     </div>
                     <div class="collapse navbar-collapse" id="rhecruta-navbar">
-                        <ul class="nav navbar-nav navbar-right">
-                            <li><a href="index.xhtml">Solicitações de Registro</a></li>
-                            <li><a href="signup-client.xhtml">Cadastrar Cliente</a></li>
-                            <li class="active"><a href="signup-professional.xhtml">Cadastrar Profissional</a></li>
-                        </ul>
+                        <h:form>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a href="home.xhtml">Home</a></li>
+                                <li class="dropdown open">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                        Welcome, #{adminCtrl.loggedAdmin.username}!
+                                        <span class="caret"></span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <h:commandLink action="#{loginController.signOut()}" 
+                                                           value="Log Out" />
+                                        </li>
+                                        <!--<li><h:link value="Sua Conta" outcome="account.xhtml"/></li>-->
+                                    </ul>
+                                </li>
+                            </ul>
+                        </h:form>
                     </div>
                 </div>
             </nav>
         </ui:define>
         <ui:define name="content">
-            
+            <section class="section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-10 col-md-offset-1">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    <h3>Solicitações de Registros de Profissionais</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <h:messages class="list-unstyled" 
+                                                infoClass="alert alert-success"
+                                                errorClass="alert alert-danger" rendered="#{not empty facesContext.getMessageList('serviceRequestMsg')}"/>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <th>Id</th>
+                                                <th>foto</th>
+                                                <th>cpf</th>
+                                                <th>nome</th>
+                                                <th>sobrenome</th>
+                                                <th>e-mail</th>
+                                                <th>contato</th>
+                                            </thead>
+                                            <tbody>
+                                                <h:form>
+                                                    <ui:repeat var="professionalRequest" value="#{adminCtrl.professionalRequests}">
+                                                        <tr>
+                                                            <td>#{professionalRequest.registerRequest.id}</td>
+                                                            <td>
+                                                                <a class="open-modal" href="#">
+                                                                    <o:graphicImage id="userPhoto" height="32" width="32" class="img-responsive thumbnail" 
+                                                                                    value="#{imageCtrl.getDocumentPhoto(professionalRequest.registerRequest.id)}" style="margin-bottom: 0px !important;" />
+                                                                </a>
+                                                            </td>
+                                                            <td>#{professionalRequest.profissional.cpf}</td>
+                                                            <td>#{professionalRequest.profissional.firstname}</td>
+                                                            <td>#{professionalRequest.profissional.lastname}</td>
+                                                            <td>#{professionalRequest.profissional.userAccount.username}</td>
+                                                            <td>#{professionalRequest.profissional.phone}</td>
+                                                            <td>
+                                                                <div class="btn-group btn-group-sm">
+                                                                    <h:commandButton class="btn btn-primary" 
+                                                                                     value="Aceitar"
+                                                                                     action="#{adminCtrl.respondRequest(professionalRequest.registerRequest, true)}"/>
+                                                                    <h:commandButton class="btn btn-danger" 
+                                                                                     value="Negar" 
+                                                                                     action="#{adminCtrl.respondRequest(professionalRequest.registerRequest, false)}"/>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </ui:repeat>
+                                                </h:form>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- FEEDBACK Service Modal -->
+            <h:panelGroup layout="block" rendered="${not empty facesContext.getMessageList('serviceMessage')}">
+                <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" id="successModal">
+                    <div class="modal-dialog modal-sm" role="document">
+                        <h:messages class="list-unstyled" infoClass="alert alert-success" errorClass="alert alert-danger" layout="block"/>
+                    </div>	 
+                </div>
+            </h:panelGroup>
+            <!-- END -->
         </ui:define>
-        
     </ui:composition>
-    
 </html>

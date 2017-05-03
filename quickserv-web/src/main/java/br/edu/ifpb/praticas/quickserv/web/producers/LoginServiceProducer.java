@@ -25,7 +25,6 @@ public class LoginServiceProducer {
     @Dependent
     @Produces
     public LoginService getLoginService() {
-        System.out.println("HELLO WORLD!");
         return new ServiceLocator().lookup(this.resource, LoginService.class);
     }
 }

@@ -99,7 +99,4 @@ public class ProfessionalServiceImpl implements ProfessionalService {
             throw new UserNotFoundException("There isn't Professionals with the username \""+username+"\"!");
         return found;
     }
-    
-    
-    
 }

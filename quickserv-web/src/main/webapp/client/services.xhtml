@@ -9,17 +9,17 @@ and open the template in the editor.
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-    
-    
+
     <ui:composition template="../templates/layout.xhtml">
+
         <ui:define name="header">
             <nav class="navbar navbar-default">
                 <div class="container">
                     <!-- Navbar header -->
                     <div class="navbar-header">
                         <!-- Toggle Menu Button -->
-                        <button class="navbar-toggle collapsed" 
-                                data-toggle="collapse" 
+                        <button class="navbar-toggle collapsed"
+                                data-toggle="collapse"
                                 data-target="#rhecruta-navbar"
                                 aria-expanded="false">
                             <span class="sr-only">Toggle Navigation</span>
@@ -33,39 +33,35 @@ and open the template in the editor.
                     <div class="collapse navbar-collapse" id="rhecruta-navbar">
                         <h:form>
                             <ul class="nav navbar-nav navbar-right">
-                                <li>
-                                    <a href="home.xhtml">
-                                        Solicitações 
-                                    </a>
-                                </li>
-                                <li>
-                                    <h:link value="Propostas" outcome="proposals.xhtml">
-                                        <span class="badge">
-                                            #{serviceProposalCtrl.countByProfessional(professionalCtrl.loggedProfessional)}
-                                        </span>
-                                    </h:link>
-                                </li>
-                                <li class="active">
-                                    <a href="#">
-                                        Serviços 
-                                        <span class="badge">
-                                        #{serviceCtrl.countByProfessional(professionalCtrl.loggedProfessional)}
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="dropdown open">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                        Welcome, #{professionalCtrl.loggedProfessional.firstname}!
+                                <li class="dropdown">
+                                    <a href="#home" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                        Solicitações
                                         <span class="caret"></span>
                                     </a>
-                                    <ul class="dropdown-menu"> 
+                                    <ul class="dropdown-menu">
                                         <li>
-                                            <h:commandLink action="#{loginController.signOut()}" 
+                                            <a href="home.xhtml">
+                                                Ver Solicitações
+                                                <span class="label label-primary">
+                                                    #{serviceRequestCtrl.getServiceRequestQuantityByClient(clientCtrl.loggedClient)}
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li><h:link value="Nova Solicitação" outcome="new-solicitation.xhtml"></h:link></li>
+                                    </ul>
+                                </li>
+                                <li class="active"><a href="#">Serviços <span class="label label-success">#{serviceCtrl.countByClient(clientCtrl.loggedClient)}</span></a></li>
+                                <li class="dropdown open">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                        Welcome, #{clientCtrl.loggedClient.firstname}!
+                                        <span class="caret"></span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <h:commandLink action="#{loginController.signOut()}"
                                                            value="Log Out" />
                                         </li>
-                                        <li>
-                                            <h:link value="Minha Conta" outcome="account.xhtml"/>
-                                        </li>
+                                        <li><h:link value="Sua Conta" outcome="account.xhtml"/></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -79,7 +75,7 @@ and open the template in the editor.
                 <div class="col-md-10 col-md-offset-1">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <h4>Seus Serviços</h4>
+                            <h4>Serviços</h4>
                         </div>
                         <div class="panel-body">
                             <h:messages class="list-unstyled"
@@ -88,7 +84,7 @@ and open the template in the editor.
                             <h:form>
                                 <div class="table-responsive">
                                     <h:dataTable class="table table-striped"
-                                                 value="#{serviceCtrl.listByProfessional(professionalCtrl.loggedProfessional)}"
+                                                 value="#{serviceCtrl.listByClient(clientCtrl.loggedClient)}"
                                                  var="service">
                                         <h:column>
                                             <f:facet name="header">Estado</f:facet>
@@ -103,19 +99,35 @@ and open the template in the editor.
                                                 #{service.serviceRequest.owner.firstname} #{service.serviceRequest.owner.lastname}
                                         </h:column>
                                         <h:column>
+                                            <f:facet name="header">Profissional</f:facet>
+                                                #{service.serviceProposal.professional.firstname} #{service.serviceProposal.professional.lastname}
+                                        </h:column>
+                                        <h:column>
                                             <f:facet name="header">Data da Solicitação</f:facet>
                                             <h:outputText value="#{service.serviceProposal.choosedDate}">
                                                 <f:converter converterId="localDateTimeConverter" />
                                             </h:outputText>
                                         </h:column>
                                         <h:column>
-                                            <f:facet name="header">Valor cobrado</f:facet>
+                                            <f:facet name="header">Preço</f:facet>
                                             R$ #{service.serviceProposal.price}
                                         </h:column>
                                         <h:column>
-                                            <f:facet name="header">Avaliação do Cliente</f:facet>
-                                            #{serviceCtrl.wasEvaluated(service.evaluation) ? 
-                                              service.evaluation.description : 'Ainda sem avaliação'}
+                                            <f:facet name="header">Avaliação</f:facet>
+                                            <h:panelGroup class="btn-group btn-group-xs"
+                                                          rendered="#{!serviceCtrl.wasEvaluated(service.evaluation)
+                                                                      and serviceRequestCtrl.isOver(service.serviceRequest)}">
+                                                <h:commandButton class="btn btn-primary"
+                                                                 value="Gostei" 
+                                                                 action="#{serviceCtrl.evaluate(service, true)}"/>
+                                                <h:commandButton class="btn btn-danger"
+                                                                 value="Não Gostei"
+                                                                 action="#{serviceCtrl.evaluate(service, false)}"/>
+                                            </h:panelGroup>
+                                            <h:panelGrid rendered="#{serviceCtrl.wasEvaluated(service.evaluation) or
+                                                                     !serviceRequestCtrl.isOver(service.serviceRequest)}">
+                                                         #{service.evaluation.description}
+                                            </h:panelGrid>
                                         </h:column>
                                     </h:dataTable>
                                 </div>
@@ -125,5 +137,6 @@ and open the template in the editor.
                 </div>
             </section>
         </ui:define>
+
     </ui:composition>
 </html>

@@ -41,7 +41,7 @@ and open the template in the editor.
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <a href="#">
+                                            <a href="home.xhtml">
                                                 Ver Solicitações
                                                 <span class="label label-primary">
                                                     #{serviceRequestCtrl.getServiceRequestQuantityByClient(clientCtrl.loggedClient)}
@@ -51,7 +51,7 @@ and open the template in the editor.
                                         <li><h:link value="Nova Solicitação" outcome="new-solicitation.xhtml"></h:link></li>
                                     </ul>
                                 </li>
-                                <li><a href="#">Serviços <span class="label label-success">#{serviceCtrl.countByClient(clientCtrl.loggedClient)}</span></a></li>
+                                <li><a href="services.xhtml">Serviços <span class="label label-success">#{serviceCtrl.countByClient(clientCtrl.loggedClient)}</span></a></li>
                                 <li class="dropdown open active">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                         Welcome, #{clientCtrl.loggedClient.firstname}!
@@ -62,6 +62,7 @@ and open the template in the editor.
                                             <h:commandLink action="#{loginController.signOut()}" 
                                                            value="Log Out" />
                                         </li>
+                                        <li><h:link value="Sua Conta" outcome="account.xhtml"/></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -93,7 +94,7 @@ and open the template in the editor.
                                                 <label for="username">E-mail</label>
                                                 <h:inputText disabled="true" class="form-control" id="username" a:placeholder="E-mail" value="#{clientCtrl.updatableClient.userAccount.username}"/>
                                                 <label for="password">Senha</label>
-                                                <h:inputSecret class="form-control" id="password" a:placeholder="Senha" value="#{clientCtrl.updatableClient.userAccount.password}"/>
+                                                <h:inputSecret redisplay="true" class="form-control" id="password" a:placeholder="Senha" value="#{clientCtrl.updatableClient.userAccount.password}"/>
                                                 <div class="form-group">
                                                     <label for="userPhoto">Sua Foto</label>
                                                     <o:graphicImage id="userPhoto" height="128" width="128" class="img-responsive thumbnail" 

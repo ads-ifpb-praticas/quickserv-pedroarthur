@@ -44,7 +44,14 @@ and open the template in the editor.
                                         </span>
                                     </h:link>
                                 </li>
-                                <li><a href="#">Serviços <span class="badge">#{serviceProposalCtrl.countByProfessional(professionalCtrl.loggedProfessional)}</span></a></li>
+                                <li>
+                                    <a href="services.xhtml">
+                                        Serviços 
+                                        <span class="badge">
+                                        #{serviceCtrl.countByProfessional(professionalCtrl.loggedProfessional)}
+                                        </span>
+                                    </a>
+                                </li>
                                 <li class="dropdown open active">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                         Welcome, #{professionalCtrl.loggedProfessional.firstname}!

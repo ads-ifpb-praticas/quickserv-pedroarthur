@@ -111,7 +111,6 @@ public class ServiceRequestServiceImpl implements ServiceRequestService {
         if(serviceRequest.getStatus().equals(ServiceRequestStatus.SOLVED) || 
                 serviceRequest.getStatus().equals(ServiceRequestStatus.NOT_SOLVED))
             return false;
-        System.out.println("[ServiceRequestServiceImpl.isOver] serviceRequestId: "+serviceRequest.getId());
         Service service = this.serviceDAO.getByServiceRequestId(serviceRequest.getId());
         if(service == null) return false;
         LocalDateTime now = LocalDateTime.now();
