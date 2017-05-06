@@ -13,6 +13,7 @@ function openProposalsModal(event) {
     $('#proposalsModal').modal('show');
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
     $('#successModal').modal('show');
+    $('#datetimepicker1').datetimepicker();
 });

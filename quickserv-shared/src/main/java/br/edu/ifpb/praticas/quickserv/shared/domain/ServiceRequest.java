@@ -5,6 +5,7 @@
  */
 package br.edu.ifpb.praticas.quickserv.shared.domain;
 
+import br.edu.ifpb.praticas.quickserv.shared.enums.ServiceType;
 import br.edu.ifpb.praticas.quickserv.shared.converter.LocalDateTimeConverter;
 import br.edu.ifpb.praticas.quickserv.shared.enums.ServiceRequestStatus;
 import java.io.Serializable;

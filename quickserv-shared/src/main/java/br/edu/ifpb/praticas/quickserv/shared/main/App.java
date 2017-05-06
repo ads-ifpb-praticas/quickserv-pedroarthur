@@ -10,7 +10,7 @@ import br.edu.ifpb.praticas.quickserv.shared.domain.Professional;
 import br.edu.ifpb.praticas.quickserv.shared.domain.Service;
 import br.edu.ifpb.praticas.quickserv.shared.domain.ServiceProposal;
 import br.edu.ifpb.praticas.quickserv.shared.domain.ServiceRequest;
-import br.edu.ifpb.praticas.quickserv.shared.domain.ServiceType;
+import br.edu.ifpb.praticas.quickserv.shared.enums.ServiceType;
 import br.edu.ifpb.praticas.quickserv.shared.domain.UserAccount;
 import br.edu.ifpb.praticas.quickserv.shared.enums.Evaluation;
 import br.edu.ifpb.praticas.quickserv.shared.enums.RegisterRequestStatus;

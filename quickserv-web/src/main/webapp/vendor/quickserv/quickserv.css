@@ -45,16 +45,6 @@ and open the template in the editor.
     height: 100vh;
 }
 
-.valign-wrapper {
-    position: relative;
-}
-
-.valign {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
 .list-unstyled {
     padding-left: 0px;
 }

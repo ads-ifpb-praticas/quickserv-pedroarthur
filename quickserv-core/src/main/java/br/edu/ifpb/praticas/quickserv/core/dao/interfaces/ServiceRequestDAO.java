@@ -6,7 +6,7 @@
 package br.edu.ifpb.praticas.quickserv.core.dao.interfaces;
 
 import br.edu.ifpb.praticas.quickserv.shared.domain.ServiceRequest;
-import br.edu.ifpb.praticas.quickserv.shared.domain.ServiceType;
+import br.edu.ifpb.praticas.quickserv.shared.enums.ServiceType;
 import br.edu.ifpb.praticas.quickserv.shared.enums.ServiceRequestStatus;
 import java.util.List;
 

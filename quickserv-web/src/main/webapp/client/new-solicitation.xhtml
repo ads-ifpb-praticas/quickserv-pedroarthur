@@ -60,7 +60,7 @@ and open the template in the editor.
                                         <li>
                                             <h:commandLink action="#{loginController.signOut()}" 
                                                            value="Log Out" />
-                                            
+
                                         </li>
                                         <li><h:link value="Sua Conta" outcome="account.xhtml"/></li>
                                     </ul>
@@ -77,8 +77,8 @@ and open the template in the editor.
                     <div class="row">
                         <div class="col-md-8 col-md-offset-2">
                             <h:messages class="list-unstyled" 
-                                    infoClass="alert alert-success"
-                                    errorClass="alert alert-danger" rendered="#{not empty facesContext.getMessageList('serviceRequestMsg')}"/>
+                                        infoClass="alert alert-success"
+                                        errorClass="alert alert-danger" rendered="#{not empty facesContext.getMessageList('serviceRequestMsg')}"/>
                             <h4>Nova solicitação de serviço</h4>
                             <p>Preencha todos os campos abaixo para solicitar um novo serviço!</p>
                             <h:form>
@@ -105,13 +105,13 @@ and open the template in the editor.
                                                        itemLabel="#{type.description}"/>
                                     </h:selectOneMenu>
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label for="country">País</label>
                                     <h:inputText a:placeholder="País" class="form-control" 
                                                  id="country" 
                                                  value="#{serviceRequestCtrl.address.country}" />
-                                     <h:message for="country" styleClass="error-color"/>
+                                    <h:message for="country" styleClass="error-color"/>
                                 </div>
                                 <div class="form-group">
                                     <label for="state">Estado</label>
@@ -154,18 +154,26 @@ and open the template in the editor.
                                                  value="#{serviceRequestCtrl.address.complemento}" />
                                     <h:message for="complement" styleClass="error-color"/>
                                 </div>
-                                
+
                                 <div class="jumbotron">
                                     <div class="row">   
-                                        <div class="col-md-12">
+                                        <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="startSuggestedDate">Data sugerida Início</label>
-                                                <h:inputText class="form-control" id="startSuggestedDate" 
-                                                             size="20" 
-                                                             a:placeholder="Data Sugerida"
-                                                             value="#{suggestHoursCtrl.dateTime}">
-                                                    <f:converter converterId="localDateTimeConverter" />
-                                                </h:inputText>
+                                                <div class='input-group date' id='datetimepicker1'>
+
+                                                    <h:inputText class="form-control" id="startSuggestedDate" 
+                                                                 size="20" 
+                                                                 a:placeholder="Data Sugerida"
+                                                                 value="#{suggestHoursCtrl.dateTime}">
+                                                        <f:converter converterId="localDateTimeConverter" />
+                                                        <f:validator validatorId="dateTimeValidator" />
+                                                    </h:inputText>
+                                                    <span class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                    </span>
+                                                    <h:message for="startSuggestedDate" styleClass="error-color"/>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

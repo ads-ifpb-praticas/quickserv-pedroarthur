@@ -12,7 +12,7 @@ import br.edu.ifpb.praticas.quickserv.shared.domain.Address;
 import br.edu.ifpb.praticas.quickserv.shared.domain.Client;
 import br.edu.ifpb.praticas.quickserv.shared.domain.Service;
 import br.edu.ifpb.praticas.quickserv.shared.domain.ServiceRequest;
-import br.edu.ifpb.praticas.quickserv.shared.domain.ServiceType;
+import br.edu.ifpb.praticas.quickserv.shared.enums.ServiceType;
 import br.edu.ifpb.praticas.quickserv.shared.enums.ServiceRequestStatus;
 import br.edu.ifpb.praticas.quickserv.shared.services.interfaces.ServiceRequestService;
 import java.time.LocalDateTime;
