@@ -66,7 +66,7 @@ public class ClientServiceIT {
                 UserRole.CLIENT, true);
         this.existingClient = new Client("334.199.432-70", "Filipe Marcelo", 
                 "Campos", "(62)99545-9282", new Address(), existingUserAccount);
-        this.newClient = new Client("111.222.333-44", "Teste teste",
+        this.newClient = new Client("121.144.186-50", "Teste teste",
                 "Teste", "(99)99999-9999", new Address(), newUserAccount);
     }
     
