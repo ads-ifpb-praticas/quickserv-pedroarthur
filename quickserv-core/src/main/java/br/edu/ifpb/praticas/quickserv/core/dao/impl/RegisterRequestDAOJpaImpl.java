@@ -7,6 +7,7 @@ package br.edu.ifpb.praticas.quickserv.core.dao.impl;
 
 import br.edu.ifpb.praticas.quickserv.core.dao.interfaces.RegisterRequestDAO;
 import br.edu.ifpb.praticas.quickserv.shared.domain.RegisterRequest;
+import br.edu.ifpb.praticas.quickserv.shared.dto.ProfessionalRegisterRequest;
 import br.edu.ifpb.praticas.quickserv.shared.enums.RegisterRequestStatus;
 import java.util.List;
 import javax.ejb.Local;
@@ -71,6 +72,17 @@ public class RegisterRequestDAOJpaImpl implements RegisterRequestDAO {
                 .setParameter("id", registerRequestId)
                 .setParameter("status", RegisterRequestStatus.PENDENT);
         return query.getSingleResult() > 0;
+    }
+
+    @Override
+    public List<ProfessionalRegisterRequest> listProfessionalRequestsByStatus(RegisterRequestStatus status) {
+        TypedQuery<ProfessionalRegisterRequest> query = this.em
+                .createQuery("SELECT new br.edu.ifpb.praticas.quickserv.shared.dto.ProfessionalRegisterRequest(r, p) "
+                + "FROM RegisterRequest r, Professional p "
+                + "WHERE r.account.username = p.userAccount.username AND r.status = :status", 
+                ProfessionalRegisterRequest.class)
+                .setParameter("status", status);
+        return query.getResultList();
     }
     
 }

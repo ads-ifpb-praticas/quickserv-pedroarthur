@@ -3,23 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edu.ifpb.praticas.quickserv.shared.domain;
+package br.edu.ifpb.praticas.quickserv.shared.enums;
 
 /**
  *
  * @author Pedro Arthur
  */
-public enum ServiceType {
+public enum Evaluation {
     
-    ELECTRIC("Elétrico"),
-    HIDRAULIC("Hidráulico"),
-    PAINT("Pintura"),
-    MASONRY("Alvenaria"),
-    REPAIR("Reparo");
+    LIKE("Gostou"), DISLIKE("Não gostou"), NONE("Sem avaliação");
     
     private final String description;
     
-    ServiceType(String description) {
+    Evaluation(String description) {
         this.description = description;
     }
 

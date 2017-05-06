@@ -5,14 +5,16 @@
  */
 package br.edu.ifpb.praticas.quickserv.web.controllers;
 
-import br.edu.ifpb.praticas.quickserv.shared.domain.Period;
 import br.edu.ifpb.praticas.quickserv.shared.domain.Professional;
 import br.edu.ifpb.praticas.quickserv.shared.domain.ServiceProposal;
 import br.edu.ifpb.praticas.quickserv.shared.domain.ServiceRequest;
 import br.edu.ifpb.praticas.quickserv.shared.services.interfaces.ServiceProposalService;
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.ejb.EJBException;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
@@ -36,15 +38,18 @@ public class ServiceProposalController implements Serializable {
 
     @Inject
     private ServiceProposalService serviceProposalService;
-    
-    @Inject
-    private SuggestedHoursController suggestedHoursCtrl;
+    private LocalDateTime dateTime;
 
     @PostConstruct
     private void init() {
         System.out.println("[ServiceProposalController] I'm constructed!");
         beginConversation();
         initAttributes();
+    }
+
+    @PreDestroy
+    private void preDestroy() {
+        System.out.println("[ServiceProposalController] I'm Destructed!");
     }
 
     private void initAttributes() {
@@ -71,20 +76,16 @@ public class ServiceProposalController implements Serializable {
     }
 
     public String save(Professional professional) {
-        
-        List<Period> periods = this.suggestedHoursCtrl.getPeriods();
-        
-        this.serviceProposal.addSuggestedDates(periods);
+
         this.serviceProposal.setServiceRequest(this.serviceRequest);
-        this.serviceProposal.setProfessional(professional); 
-        
+        this.serviceProposal.setProfessional(professional);
+        this.serviceProposal.setChoosedDate(this.dateTime);
         try {
             this.serviceProposalService.save(serviceProposal);
 
             initAttributes();
-            this.suggestedHoursCtrl.endConversation();
             endConversation();
-            
+
             FacesMessage message = createMessage("Proposta enviada com sucesso!", FacesMessage.SEVERITY_INFO);
             addMessage("serviceProposalMsg", message);
         } catch (EJBException ex) {
@@ -93,22 +94,42 @@ public class ServiceProposalController implements Serializable {
         }
         return null;
     }
-    
+
+    public String remove(ServiceProposal proposal) {
+        try {
+            this.serviceProposalService.delete(proposal);
+            FacesMessage message = createMessage("A proposta foi excluída com sucesso!", FacesMessage.SEVERITY_INFO);
+            addMessage("serviceProposalMsg", message);
+        } catch (EJBException ex) {
+            FacesMessage message = createMessage(ex.getCausedByException().getMessage(), FacesMessage.SEVERITY_ERROR);
+            addMessage("serviceProposalMsg", message);
+        }
+        endConversation();
+        return null;
+    }
+
     public List<ServiceProposal> listByProfessional(Professional professional) {
-        List<ServiceProposal> proposals = 
-                this.serviceProposalService.listByProfessional(professional);
+        List<ServiceProposal> proposals
+                = this.serviceProposalService.listByProfessional(professional);
         return proposals;
     }
-    
+
+    public List<ServiceProposal> listByServiceRequest(ServiceRequest request) {
+        if (request == null) {
+            return new ArrayList<>();
+        }
+        return this.serviceProposalService.listByServiceRequest(request);
+    }
+
     public Long countByProfessional(Professional professional) {
         return this.serviceProposalService.countByProfessional(professional);
     }
-    
+
     private void addMessage(String clientId, FacesMessage message) {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(clientId, message);
     }
-    
+
     private FacesMessage createMessage(String text, FacesMessage.Severity severity) {
         FacesMessage message = new FacesMessage(text);
         message.setSeverity(severity);
@@ -125,6 +146,14 @@ public class ServiceProposalController implements Serializable {
 
     public ServiceRequest getServiceRequest() {
         return serviceRequest;
+    }
+
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
     }
 
 }

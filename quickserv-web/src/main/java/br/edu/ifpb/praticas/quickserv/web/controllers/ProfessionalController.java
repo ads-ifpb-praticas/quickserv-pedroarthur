@@ -66,11 +66,11 @@ public class ProfessionalController {
             
         } catch (IOException  ex) {
             FacesMessage message = createMessage("Erro ao realizar upload das imagens!", FacesMessage.SEVERITY_ERROR);
-            addMessage("professionalMsg", message);
+            addMessage("ProfessionalMsg", message);
         } catch (EJBException ex) {
             String text = ex.getCausedByException().getMessage();
             FacesMessage message = createMessage(text, FacesMessage.SEVERITY_ERROR);
-            addMessage("professionalMsg", message);
+            addMessage("ProfessionalMsg", message);
         }
         
         return null;
@@ -101,7 +101,7 @@ public class ProfessionalController {
     public Professional getLoggedProfessional() {
         HttpSession session = SessionUtils.getSession(false);
         UserAccount loggedUser = (UserAccount) session.getAttribute("loggedUserAccount");   
-        if(loggedUser != null) {
+        if(loggedUser != null && loggedUser.getRole().equals(UserRole.PROFESSIONAL)) {
             Professional loggedProfessional = professionalService.getByUser(loggedUser);
             if(loggedProfessional.getAddress() == null) {
                 loggedProfessional.setAddress(new Address());

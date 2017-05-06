@@ -16,7 +16,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 
 /**
@@ -38,10 +37,11 @@ public class AccessFilter implements Filter {
         UserAccount loggedUser = (UserAccount) httpRequest.getSession().getAttribute("loggedUserAccount");
         
         if(loggedUser == null) {
+            System.out.println("[AccessFilter] There's no logged user!");
             httpResponse.sendRedirect("/quickserv-web/faces/index.xhtml");
         }
         else {
-            
+            System.out.println("Logged User: "+loggedUser);
             String path = httpRequest.getRequestURI();
             path = path.substring(httpRequest.getContextPath().length());
             UserRole role = loggedUser.getRole();
@@ -50,23 +50,26 @@ public class AccessFilter implements Filter {
                 case CLIENT:
                     if(!path.startsWith("/faces/client/")) {
                         httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED);
-                    }
+                    } else 
+                        chain.doFilter(request, response);
                     break;
                 case PROFESSIONAL:
                     if(!path.startsWith("/faces/professional/")) {
                         httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED);
-                    }
+                    } else 
+                        chain.doFilter(request, response);
                     break;
                 case ADMIN:
                     if(!path.startsWith("/faces/admin/")) {
                         httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED);
-                    }
+                    } else 
+                        chain.doFilter(request, response);
                     break;
             }
             
         }
         
-        chain.doFilter(request, response);
+        
     }
 
     @Override

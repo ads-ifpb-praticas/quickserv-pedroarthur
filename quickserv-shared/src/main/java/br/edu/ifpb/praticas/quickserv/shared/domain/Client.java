@@ -13,6 +13,8 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.br.CPF;
 
 /**
  *
@@ -23,9 +25,14 @@ import javax.persistence.OneToOne;
 public class Client implements Serializable {
     
     @Id
+    @CPF(message = "Insira um CPF válido")
+    @NotEmpty(message = "Este campo é obrigatório")
     private String cpf;
+    @NotEmpty(message = "Este campo é obrigatório")
     private String firstname;
+    @NotEmpty(message = "Este campo é obrigatório")
     private String lastname;
+    @NotEmpty(message = "Este campo é obrigatório")
     private String phone;
     
     @Embedded

@@ -5,7 +5,7 @@
  */
 package br.edu.ifpb.praticas.quickserv.shared.domain;
 
-import br.edu.ifpb.praticas.quickserv.shared.enums.Avaliation;
+import br.edu.ifpb.praticas.quickserv.shared.enums.Evaluation;
 import br.edu.ifpb.praticas.quickserv.shared.vo.ServicePK;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -40,24 +40,19 @@ public class Service implements Serializable {
     @JoinColumn(name = "service_proposal_id")
     private ServiceProposal serviceProposal;
     
-    @Embedded
-    private Period choosenDate;
-    
     @Enumerated(EnumType.STRING)
-    private Avaliation avaliation;
+    private Evaluation evaluation;
 
-    public Service(ServiceRequest serviceRequest, ServiceProposal serviceProposal, Period choosenData) {
+    public Service(ServiceRequest serviceRequest, ServiceProposal serviceProposal) {
         this.serviceRequest = serviceRequest;
         this.serviceProposal = serviceProposal;
-        this.choosenDate = choosenData;
-        this.avaliation = Avaliation.NONE;
+        this.evaluation = Evaluation.NONE;
     }
     
     public Service() {
         this.serviceRequest = new ServiceRequest();
         this.serviceProposal = new ServiceProposal();
-        this.choosenDate = new Period();
-        this.avaliation = Avaliation.NONE;
+        this.evaluation = Evaluation.NONE;
     }
 
     public ServiceRequest getServiceRequest() {
@@ -76,24 +71,16 @@ public class Service implements Serializable {
         this.serviceProposal = serviceProposal;
     }
 
-    public Period getChoosenDate() {
-        return choosenDate;
+    public Evaluation getEvaluation() {
+        return evaluation;
     }
 
-    public void setChoosenDate(Period choosenDate) {
-        this.choosenDate = choosenDate;
-    }
-
-    public Avaliation getAvaliation() {
-        return avaliation;
-    }
-
-    public void setAvaliation(Avaliation avaliation) {
-        this.avaliation = avaliation;
+    public void setEvaluation(Evaluation evaluation) {
+        this.evaluation = evaluation;
     }
 
     @Override
     public String toString() {
-        return "Service{" + "serviceRequest=" + serviceRequest + ", serviceProposal=" + serviceProposal + ", choosenDate=" + choosenDate + ", avaliation=" + avaliation + '}';
+        return "Service{" + "serviceRequest=" + serviceRequest + ", serviceProposal=" + serviceProposal + ", evaluation=" + evaluation + '}';
     }
 }

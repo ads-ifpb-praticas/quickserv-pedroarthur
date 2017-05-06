@@ -12,8 +12,10 @@ import br.edu.ifpb.praticas.quickserv.core.dao.interfaces.RegisterRequestDAO;
 import br.edu.ifpb.praticas.quickserv.shared.domain.Professional;
 import br.edu.ifpb.praticas.quickserv.shared.domain.RegisterRequest;
 import br.edu.ifpb.praticas.quickserv.shared.domain.UserAccount;
+import br.edu.ifpb.praticas.quickserv.shared.dto.ProfessionalRegisterRequest;
 import br.edu.ifpb.praticas.quickserv.shared.enums.RegisterRequestStatus;
 import br.edu.ifpb.praticas.quickserv.shared.services.interfaces.AdminService;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Remote;
@@ -64,6 +66,11 @@ public class AdminServiceImpl implements AdminService {
         if (!registerRequestDAO.isPendent(registerRequest.getId())) {
             throw new IllegalArgumentException("The request was already responded!");
         }
+    }
+    
+    @Override
+    public List<ProfessionalRegisterRequest> listProfessionalsRegisterRequestsByStatus(RegisterRequestStatus status) {
+        return registerRequestDAO.listProfessionalRequestsByStatus(status);
     }
 
 }

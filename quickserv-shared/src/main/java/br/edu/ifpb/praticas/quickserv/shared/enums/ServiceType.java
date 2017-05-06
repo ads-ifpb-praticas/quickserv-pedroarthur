@@ -9,17 +9,27 @@ package br.edu.ifpb.praticas.quickserv.shared.enums;
  *
  * @author Pedro Arthur
  */
-public enum Avaliation {
+public enum ServiceType {
     
-    LIKE("Gostou"), DISLIKE("Não gostou"), NONE("Sem avaliação");
+    ELECTRIC("Elétrico", "electric"),
+    HIDRAULIC("Hidráulico", "hydraulic"),
+    PAINT("Pintura", "paint"),
+    MASONRY("Alvenaria", "masonry"),
+    REPAIR("Reparo", "repair");
     
     private final String description;
+    private final String iconName;
     
-    Avaliation(String description) {
+    ServiceType(String description, String iconName) {
         this.description = description;
+        this.iconName = iconName;
     }
 
     public String getDescription() {
         return description;
+    }
+    
+    public String getIconName() {
+        return this.iconName;
     }
 }

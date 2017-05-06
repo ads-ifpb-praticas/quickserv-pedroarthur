@@ -5,21 +5,23 @@
  */
 package br.edu.ifpb.praticas.quickserv.shared.services.interfaces;
 
+import br.edu.ifpb.praticas.quickserv.shared.domain.Client;
 import br.edu.ifpb.praticas.quickserv.shared.domain.Professional;
+import br.edu.ifpb.praticas.quickserv.shared.domain.Service;
 import br.edu.ifpb.praticas.quickserv.shared.domain.ServiceProposal;
 import br.edu.ifpb.praticas.quickserv.shared.domain.ServiceRequest;
+import br.edu.ifpb.praticas.quickserv.shared.enums.Evaluation;
 import java.util.List;
 
 /**
  *
  * @author Pedro Arthur
  */
-public interface ServiceProposalService {
-    
-    List<ServiceProposal> listByServiceRequest(ServiceRequest serviceRequest);
-    void save(ServiceProposal serviceProposal);
-    void update(ServiceProposal serviceProposal);
-    List<ServiceProposal> listByProfessional(Professional professional);
+public interface ServiceService {
+    void newService(ServiceRequest request, ServiceProposal proposal);
+    void evaluate(Service service, Evaluation evaluation);
+    List<Service> listServicesByClient(Client client);
+    List<Service> listServicesByProfessional(Professional professional);
+    Long countByClient(Client client);
     Long countByProfessional(Professional professional);
-    void delete(ServiceProposal serviceProposal);
 }

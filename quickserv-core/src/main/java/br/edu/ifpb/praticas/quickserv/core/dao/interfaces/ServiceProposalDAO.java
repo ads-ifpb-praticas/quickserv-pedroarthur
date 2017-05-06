@@ -17,4 +17,7 @@ public interface ServiceProposalDAO extends DAO<ServiceProposal> {
     List<ServiceProposal> listByServiceRequest(Long serviceRequestId);
     List<ServiceProposal> listByProfessional(String professionalCpf);
     Long countByProfessional(String professionalCpf);
+    ServiceProposal find(Long serviceProposalId);
+    void delete(ServiceProposal serviceProposal);
+    Long countByServiceRequestId(Long serviceRequestId);
 }

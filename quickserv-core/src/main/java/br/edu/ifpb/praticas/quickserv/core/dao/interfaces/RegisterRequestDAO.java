@@ -6,6 +6,8 @@
 package br.edu.ifpb.praticas.quickserv.core.dao.interfaces;
 
 import br.edu.ifpb.praticas.quickserv.shared.domain.RegisterRequest;
+import br.edu.ifpb.praticas.quickserv.shared.dto.ProfessionalRegisterRequest;
+import br.edu.ifpb.praticas.quickserv.shared.enums.RegisterRequestStatus;
 import java.util.List;
 
 /**
@@ -17,4 +19,5 @@ public interface RegisterRequestDAO extends DAO<RegisterRequest> {
     List<RegisterRequest> listAllOrderedByDateDesc();
     RegisterRequest getUserLastRegisterRequest(String username);
     boolean isPendent(Long registerRequestId);
+    List<ProfessionalRegisterRequest> listProfessionalRequestsByStatus(RegisterRequestStatus status);
 }

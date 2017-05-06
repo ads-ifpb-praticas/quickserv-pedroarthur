@@ -30,19 +30,20 @@ public class ServiceProposalDAOJpaImpl implements ServiceProposalDAO {
     public List<ServiceProposal> listByServiceRequest(Long serviceRequestId) {
         String sql = "SELECT sp FROM ServiceProposal sp"
                 + " WHERE sp.serviceRequest.id = :serviceRequestId";     
-        TypedQuery<ServiceProposal> query = em
-                .createQuery(sql, ServiceProposal.class);
+        TypedQuery<ServiceProposal> query = this.em
+                .createQuery(sql, ServiceProposal.class)
+                .setParameter("serviceRequestId", serviceRequestId);
         return query.getResultList();
     }
 
     @Override
     public void persist(ServiceProposal obj) {
-        em.persist(obj);
+        this.em.persist(obj);
     }
 
     @Override
     public void update(ServiceProposal obj) {
-        em.merge(obj);
+        this.em.merge(obj);
     }
 
     @Override
@@ -57,9 +58,28 @@ public class ServiceProposalDAOJpaImpl implements ServiceProposalDAO {
     @Override
     public Long countByProfessional(String professionalCpf) {
         String sql = "SELECT COUNT(sp) FROM ServiceProposal sp WHERE sp.professional.cpf = :professionalCpf";
-        TypedQuery<Long> query = em
+        TypedQuery<Long> query = this.em
                 .createQuery(sql, Long.class)
                 .setParameter("professionalCpf", professionalCpf);
+        return query.getSingleResult();
+    }
+
+    @Override
+    public ServiceProposal find(Long serviceProposalId) {
+        return this.em.find(ServiceProposal.class, serviceProposalId);
+    }
+
+    @Override
+    public void delete(ServiceProposal serviceProposal) {
+        this.em.remove(serviceProposal);
+    }
+    
+    @Override
+    public Long countByServiceRequestId(Long serviceRequestId) {
+        TypedQuery<Long> query = this.em.createQuery("SELECT COUNT(sp) FROM ServiceProposal sp"
+                + " WHERE sp.serviceRequest.id = :serviceRequestId",
+                Long.class)
+                .setParameter("serviceRequestId", serviceRequestId);
         return query.getSingleResult();
     }
     

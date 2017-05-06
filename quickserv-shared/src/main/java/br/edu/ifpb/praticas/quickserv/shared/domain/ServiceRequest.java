@@ -5,6 +5,8 @@
  */
 package br.edu.ifpb.praticas.quickserv.shared.domain;
 
+import br.edu.ifpb.praticas.quickserv.shared.enums.ServiceType;
+import br.edu.ifpb.praticas.quickserv.shared.converter.LocalDateTimeConverter;
 import br.edu.ifpb.praticas.quickserv.shared.enums.ServiceRequestStatus;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -13,6 +15,7 @@ import java.util.Collections;
 import java.util.List;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -26,6 +29,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
@@ -48,7 +52,9 @@ public class ServiceRequest implements Serializable {
             generator = "service_req_seq_gen"
     )
     private Long id;
+    @NotEmpty(message = "Este campo é obrigatório")
     private String title;
+    @NotEmpty(message = "Este campo é obrigatório")
     private String description;
     
     @Embedded
@@ -63,12 +69,13 @@ public class ServiceRequest implements Serializable {
     @Column(name = "date_time")
     private LocalDateTime dateTime;
     
-    @ElementCollection(fetch = FetchType.EAGER, targetClass = Period.class)
+    @ElementCollection(fetch = FetchType.EAGER, targetClass = LocalDateTime.class)
+    @Convert(converter = LocalDateTimeConverter.class)
     @CollectionTable(
             name = "service_request_dates",
             joinColumns = @JoinColumn(name = "service_request_id")
     )
-    private List<Period> suggestedDates;
+    private List<LocalDateTime> suggestedDates;
     
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_cpf")
@@ -159,23 +166,23 @@ public class ServiceRequest implements Serializable {
         this.dateTime = dateTime;
     }
 
-    public List<Period> getSuggestedDates() {
+    public List<LocalDateTime> getSuggestedDates() {
         return Collections.unmodifiableList(this.suggestedDates);
     }
 
-    public void setSuggestedDates(List<Period> suggestedDates) {
+    public void setSuggestedDates(List<LocalDateTime> suggestedDates) {
         this.suggestedDates = suggestedDates;
     }
     
-    public void addSuggestedDates(List<Period> suggestedDates) {
+    public void addSuggestedDates(List<LocalDateTime> suggestedDates) {
         this.suggestedDates.addAll(suggestedDates);
     }
     
-    public void addSuggestedDate(Period period) {
+    public void addSuggestedDate(LocalDateTime period) {
         this.suggestedDates.add(period);
     }
     
-    public void removeSuggestedDate(Period period) {
+    public void removeSuggestedDate(LocalDateTime period) {
         this.suggestedDates.remove(period);
     }
 

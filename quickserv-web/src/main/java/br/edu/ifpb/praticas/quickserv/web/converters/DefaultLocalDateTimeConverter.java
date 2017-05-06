@@ -6,7 +6,6 @@
 package br.edu.ifpb.praticas.quickserv.web.converters;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -17,27 +16,19 @@ import javax.faces.convert.FacesConverter;
  * @author Pedro Arthur
  */
 
-@FacesConverter("localDateTimeConverter")
-public class LocalDateTimeConverter implements Converter {
-    
-    private final String pattern = "dd/MM/yyyy HH:mm";
+@FacesConverter("defaultLocalDateTimeConverter")
+public class DefaultLocalDateTimeConverter implements Converter {
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        System.out.println("to convert: "+value);
         if(value == null || value.isEmpty()) return null;
-        System.out.println("is not null neither empty");
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern(pattern);
-        LocalDateTime dateTime = LocalDateTime.parse(value, dtf);
-        return dateTime;
+        return LocalDateTime.parse(value);
     }
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
-        if(value == null) return "";
-        LocalDateTime dateTime = (LocalDateTime) value;
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern(pattern);
-        return dateTime.format(dtf);
+        if(value == null) return null;
+        return value.toString();
     }
     
 }
