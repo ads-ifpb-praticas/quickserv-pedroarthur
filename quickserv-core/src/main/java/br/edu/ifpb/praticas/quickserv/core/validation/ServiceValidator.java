@@ -17,6 +17,8 @@ import br.edu.ifpb.praticas.quickserv.shared.enums.ServiceRequestStatus;
 public class ServiceValidator {
     
     public static void validate(Service service) {
+        if(service == null)
+            throw new IllegalArgumentException("This service is null");
         ServiceRequest request = service.getServiceRequest();
         ServiceProposal proposal = service.getServiceProposal();
         if(service.getEvaluation() == null)
