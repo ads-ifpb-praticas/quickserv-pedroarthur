@@ -80,7 +80,7 @@ public class ProfessionalServiceIT {
         
         this.existingProfessional = new Professional("334.199.432-70", "Filipe Marcelo", 
                 "Campos", "(62)99545-9282", new Address(), new byte[0], RegisterRequestStatus.ACCEPTED, existingUserAccount);
-        this.newProfessional = new Professional("111.222.333-44", "Teste teste",
+        this.newProfessional = new Professional("537.599.228-05", "Teste teste",
                 "Teste", "(99)99999-9999", new Address(), new byte[0], RegisterRequestStatus.ACCEPTED, newUserAccount);
     }
     
