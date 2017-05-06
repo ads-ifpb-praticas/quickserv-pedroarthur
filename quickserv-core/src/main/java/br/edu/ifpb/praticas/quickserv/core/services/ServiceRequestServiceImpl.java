@@ -8,7 +8,7 @@ package br.edu.ifpb.praticas.quickserv.core.services;
 import br.edu.ifpb.praticas.quickserv.core.dao.interfaces.ServiceDAO;
 import br.edu.ifpb.praticas.quickserv.core.dao.interfaces.ServiceProposalDAO;
 import br.edu.ifpb.praticas.quickserv.core.dao.interfaces.ServiceRequestDAO;
-import br.edu.ifpb.praticas.quickserv.shared.domain.Address;
+import br.edu.ifpb.praticas.quickserv.core.validation.AddressValidator;
 import br.edu.ifpb.praticas.quickserv.shared.domain.Client;
 import br.edu.ifpb.praticas.quickserv.shared.domain.Service;
 import br.edu.ifpb.praticas.quickserv.shared.domain.ServiceRequest;
@@ -21,7 +21,6 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
-import javax.persistence.EntityExistsException;
 
 /**
  *
@@ -38,6 +37,7 @@ public class ServiceRequestServiceImpl implements ServiceRequestService {
     private ServiceDAO serviceDAO;
     @EJB
     private ServiceProposalDAO serviceProposalDAO;
+    
 
     public ServiceRequestServiceImpl(ServiceRequestDAO serviceRequestDAO, ServiceDAO serviceDAO, ServiceProposalDAO serviceProposalDAO) {
         this.serviceRequestDAO = serviceRequestDAO;
@@ -52,28 +52,18 @@ public class ServiceRequestServiceImpl implements ServiceRequestService {
     public void save(ServiceRequest serviceRequest) {
         try {
             validate(serviceRequest);
+            AddressValidator.validate(serviceRequest.getLocate());
             serviceRequest.setDateTime(LocalDateTime.now());
             serviceRequestDAO.persist(serviceRequest);
-        } catch (IllegalArgumentException | EntityExistsException ex) {
+        } catch (IllegalArgumentException ex) {
             throw new EJBException(ex);
         }
     }
     
-    private void validate(ServiceRequest request) {
-        Address locate = request.getLocate();
-        if(locate == null) throw new IllegalArgumentException("You must fill all the address fields!");
-        if(locate.getCountry() == null || locate.getCountry().isEmpty())
-            throw new IllegalArgumentException("You must fill all the address fields!");
-        if(locate.getState() == null || locate.getState().isEmpty())
-            throw new IllegalArgumentException("You must fill all the address fields!");
-        if(locate.getCity() == null || locate.getCity().isEmpty())
-            throw new IllegalArgumentException("You must fill all the address fields!");
-        if(locate.getNeighborhood() == null || locate.getNeighborhood().isEmpty())
-            throw new IllegalArgumentException("You must fill all the address fields!");
-        if(locate.getStreet() == null || locate.getStreet().isEmpty())
-            throw new IllegalArgumentException("You must fill all the address fields!");
-        if(locate.getNumber() == null)
-            throw new IllegalArgumentException("You must fill all the address fields!");
+    private void validate(ServiceRequest serviceRequest) {
+        ServiceRequest found = serviceRequestDAO.find(serviceRequest.getId());
+        if(found != null)
+            throw new IllegalArgumentException("this request already exists!");
     }
 
     @Override
@@ -123,11 +113,13 @@ public class ServiceRequestServiceImpl implements ServiceRequestService {
         Long requestId = serviceRequest.getId();
         Long count = serviceProposalDAO.countByServiceRequestId(requestId);
         if(count > 0) {
+            System.out.println("TEM MAIS DE 0!!!!!!");
             throw new EJBException(new 
         IllegalArgumentException("Você não pode remover uma solicitação de serviço com status"
                 + " \""+serviceRequest.getStatus().getDescription()+"\"!"));
         }
+        System.out.println("NÃO TEM MAIS DE 0, DELETANDO.");
         ServiceRequest target = serviceRequestDAO.find(requestId);
         serviceRequestDAO.delete(target);
-    }   
+    }
 }

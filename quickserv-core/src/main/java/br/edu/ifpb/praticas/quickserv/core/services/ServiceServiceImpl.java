@@ -7,7 +7,7 @@ package br.edu.ifpb.praticas.quickserv.core.services;
 
 import br.edu.ifpb.praticas.quickserv.core.dao.interfaces.ServiceDAO;
 import br.edu.ifpb.praticas.quickserv.core.dao.interfaces.ServiceRequestDAO;
-import br.edu.ifpb.praticas.quickserv.shared.domain.Address;
+import br.edu.ifpb.praticas.quickserv.core.validation.ServiceValidator;
 import br.edu.ifpb.praticas.quickserv.shared.domain.Client;
 import br.edu.ifpb.praticas.quickserv.shared.domain.Professional;
 import br.edu.ifpb.praticas.quickserv.shared.domain.Service;
@@ -41,13 +41,12 @@ public class ServiceServiceImpl implements ServiceService {
     @Override
     public void newService(ServiceRequest request, ServiceProposal proposal) {
         try {
-            validate(request);
-            validate(proposal);
+            Service service = new Service(request, proposal);
+            ServiceValidator.validate(service);
             ServicePK pk = new ServicePK(request.getId(), proposal.getId());
             validate(pk);
             request.setStatus(ServiceRequestStatus.IN_PROGRESS);
             requestDAO.update(request);
-            Service service = new Service(request, proposal);
             serviceDao.persist(service);
         } catch (IllegalArgumentException | EntityExistsException ex) {
             throw new EJBException(ex);
@@ -57,29 +56,6 @@ public class ServiceServiceImpl implements ServiceService {
     private void validate(ServicePK pk) {
         if(serviceDao.serviceExists(pk))
             throw new EntityExistsException("This service already exists");
-    }
-    
-    private void validate(ServiceProposal proposal) {
-        if(proposal == null)
-            throw new IllegalArgumentException("service proposal is null. you must provide a valid service proposal.");
-    }
-    
-    private void validate(ServiceRequest request) {
-        if(request == null)     
-            throw new IllegalArgumentException("service request is null. you must provide a valid service request.");
-        if(!request.getStatus().equals(ServiceRequestStatus.PENDENT))
-            throw new IllegalArgumentException("Você não pode aceitar propostas"
-                    + " para uma solicitação de serviço com estado \""+request.getStatus().getDescription()+"\"!");
-        Address address = request.getLocate();
-        if(address.getStreet() == null 
-                || address.getStreet().isEmpty()) 
-            throw new IllegalArgumentException("Before register the service you must provide fill the street field.");
-        if(address.getNumber() == null 
-                || address.getNumber() == 0) 
-            throw new IllegalArgumentException("Before register the service you must provide fill the number field.");
-        if(address.getComplemento() == null 
-                || address.getComplemento().isEmpty())
-            throw new IllegalArgumentException("Before register the service you must provide fill the complement field.");
     }
 
     @Override

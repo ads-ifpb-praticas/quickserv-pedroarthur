@@ -6,10 +6,7 @@
 package br.edu.ifpb.praticas.quickserv.core.services;
 
 import br.edu.ifpb.praticas.quickserv.core.dao.interfaces.AdminDAO;
-import br.edu.ifpb.praticas.quickserv.core.dao.interfaces.DAO;
-import br.edu.ifpb.praticas.quickserv.core.dao.interfaces.ProfessionalDAO;
 import br.edu.ifpb.praticas.quickserv.core.dao.interfaces.RegisterRequestDAO;
-import br.edu.ifpb.praticas.quickserv.shared.domain.Professional;
 import br.edu.ifpb.praticas.quickserv.shared.domain.RegisterRequest;
 import br.edu.ifpb.praticas.quickserv.shared.domain.UserAccount;
 import br.edu.ifpb.praticas.quickserv.shared.dto.ProfessionalRegisterRequest;

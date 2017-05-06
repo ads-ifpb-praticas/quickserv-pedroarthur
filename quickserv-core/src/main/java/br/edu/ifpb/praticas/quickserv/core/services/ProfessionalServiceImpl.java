@@ -73,7 +73,7 @@ public class ProfessionalServiceImpl implements ProfessionalService {
     
     private void validate(Professional professional) {
         if(professional == null)
-            throw new IllegalArgumentException("You have to passa a professional instance to save!");
+            throw new IllegalArgumentException("You have to pass a professional instance to save!");
         if(professionalDAO.isCpfInUse(professional.getCpf())) {
             throw new EntityExistsException("O CPF está em uso. Por favor, insira um outro cpf e tente novamente!");
         } 
