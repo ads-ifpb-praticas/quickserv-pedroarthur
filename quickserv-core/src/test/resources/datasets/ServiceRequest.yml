@@ -1,0 +1,94 @@
+user_account:
+    - username: "fmcampos@wredenborg.se"
+      actived: "true"
+      password: "123456"
+      photo: "MTIzNDU="
+      role: "CLIENT"
+    - username: "giovanna-vitoria96@arteche.com.br"
+      actived: "true"
+      password: "123456"
+      photo: "MTIzNDU="
+      role: "PROFESSIONAL"
+
+client:
+    - cpf: "334.199.432-70"
+      firstname: "Filipe Marcelo"
+      lastname: "Campos"
+      phone: "(62)99545-9282"
+      city: "Goiânia"
+      complemento: "Casa"
+      country: "Brasil"
+      neighborhood: "Residencial Olinda"
+      number: 326
+      state: "GO"
+      street: "Rua MA 13"
+      user_account_username: "fmcampos@wredenborg.se"
+      
+service_request:
+    - id: 1
+      date_time: "2017-04-21 15:00:55.094"
+      description: "Pintura numa casa localizada no Jardim Oásis"
+      status: "PENDENT"
+      title: "Pintura numa casa localizada no Residencial Olinda"
+      type: "PAINT"
+      city: "Goiânia"
+      complemento: "Casa"
+      country: "Brasil"
+      neighborhood: "Residencial Olinda"
+      number: 326
+      state: "GO"
+      street: "Rua MA 13"
+      client_cpf: "334.199.432-70"
+    - id: 2
+      date_time: "2017-04-22 14:00:55.094"
+      description: "Concerto de fogão no Residentical Olinda"
+      status: "PENDENT"
+      title: "Concerto de fogão no Residentical Olinda"
+      type: "REPAIR"
+      city: "Goiânia"
+      complemento: "Casa"
+      country: "Brasil"
+      neighborhood: "Residencial Olinda"
+      number: 326
+      state: "GO"
+      street: "Rua MA 13"
+      client_cpf: "334.199.432-70"
+    - id: 3
+      date_time: "2017-04-23 14:00:55.094"
+      description: "Concerto de Lâmpada"
+      status: "PENDENT"
+      title: "Concerto de Lâmpada"
+      type: "ELECTRIC"
+      city: "Goiânia"
+      complemento: "Casa"
+      country: "Brasil"
+      neighborhood: "Residencial Olinda"
+      number: 326
+      state: "GO"
+      street: "Rua MA 13"
+      client_cpf: "334.199.432-70"
+
+professional:
+    - cpf: "502.012.576-88"
+      document_photo_url: "MTIzNDU="
+      firstname: "Giovanna Vitória"
+      lastname: "Isadora Ribeiro"
+      phone: "(98)98231-2679"
+      status: "ACCEPTED"
+      city: "São Luís"
+      complemento: "Casa"
+      country: "Brasil"
+      neighborhood: "Turu"
+      number: 664
+      state: "MA"
+      street: "Condomínio Lago Azul"
+      user_account_username: "giovanna-vitoria96@arteche.com.br"
+      
+service_proposal:
+    - id: 1
+      choosed_date: "2017-04-22 15:00:00"
+      description: "Solucionarei"
+      price: 200.00
+      professional_cpf: "502.012.576-88"
+      service_request_id: 1
+      
