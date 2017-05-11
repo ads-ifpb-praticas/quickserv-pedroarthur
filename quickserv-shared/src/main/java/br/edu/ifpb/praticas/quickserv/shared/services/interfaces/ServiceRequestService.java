@@ -7,7 +7,8 @@ package br.edu.ifpb.praticas.quickserv.shared.services.interfaces;
 
 import br.edu.ifpb.praticas.quickserv.shared.domain.Client;
 import br.edu.ifpb.praticas.quickserv.shared.domain.ServiceRequest;
-import br.edu.ifpb.praticas.quickserv.shared.domain.ServiceType;
+import br.edu.ifpb.praticas.quickserv.shared.enums.ServiceType;
+import br.edu.ifpb.praticas.quickserv.shared.enums.ServiceRequestStatus;
 import java.util.List;
 
 /**
@@ -20,6 +21,9 @@ public interface ServiceRequestService {
     void update(ServiceRequest serviceRequest);
     List<ServiceRequest> listByClient(Client client);
     Long countByClient(Client client);
-    List<ServiceRequest> listByTypeOrderedByDate(ServiceType type);
+    List<ServiceRequest> listByTypeAndStatusOrderedByDate(ServiceType type, ServiceRequestStatus status);
+    List<ServiceRequest> listByStatusOrderedByDate(ServiceRequestStatus status);
     List<ServiceRequest> listOrderedByDate();
+    boolean isOver(ServiceRequest serviceRequest);
+    void delete(ServiceRequest serviceRequest);
 }

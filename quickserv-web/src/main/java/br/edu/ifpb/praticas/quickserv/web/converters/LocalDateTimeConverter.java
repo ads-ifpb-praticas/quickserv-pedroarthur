@@ -24,8 +24,9 @@ public class LocalDateTimeConverter implements Converter {
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
+        System.out.println("to convert: "+value);
         if(value == null || value.isEmpty()) return null;
-        
+        System.out.println("is not null neither empty");
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern(pattern);
         LocalDateTime dateTime = LocalDateTime.parse(value, dtf);
         return dateTime;

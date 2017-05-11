@@ -7,7 +7,8 @@ package br.edu.ifpb.praticas.quickserv.core.dao.impl;
 
 import br.edu.ifpb.praticas.quickserv.core.dao.interfaces.ServiceRequestDAO;
 import br.edu.ifpb.praticas.quickserv.shared.domain.ServiceRequest;
-import br.edu.ifpb.praticas.quickserv.shared.domain.ServiceType;
+import br.edu.ifpb.praticas.quickserv.shared.enums.ServiceType;
+import br.edu.ifpb.praticas.quickserv.shared.enums.ServiceRequestStatus;
 import java.util.List;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -59,10 +60,13 @@ public class ServiceRequestDAOJpaImpl implements ServiceRequestDAO {
     }
 
     @Override
-    public List<ServiceRequest> listByTypeOrderedByDate(ServiceType type) {
-        String sql = "SELECT sr FROM ServiceRequest sr WHERE sr.type = :type ORDER BY sr.dateTime DESC";
+    public List<ServiceRequest> listByTypeAndStatusOrderedByDate(ServiceType type, 
+            ServiceRequestStatus status) {
+        String sql = "SELECT sr FROM ServiceRequest sr"
+                + " WHERE sr.type = :type AND sr.status = :status ORDER BY sr.dateTime";
         TypedQuery<ServiceRequest> query = em.createQuery(sql, ServiceRequest.class)
-                .setParameter("type", type);
+                .setParameter("type", type)
+                .setParameter("status", status);
         return query.getResultList();
     }
 
@@ -71,6 +75,26 @@ public class ServiceRequestDAOJpaImpl implements ServiceRequestDAO {
         String sql = "SELECT sr FROM ServiceRequest sr ORDER BY sr.dateTime DESC";
         TypedQuery<ServiceRequest> query = em.createQuery(sql, ServiceRequest.class);
         return query.getResultList();
+    }
+
+    @Override
+    public List<ServiceRequest> listByStatusOrderByDate(ServiceRequestStatus status) {
+        String sql = "SELECT sr FROM ServiceRequest sr"
+                + " WHERE sr.status = :status ORDER BY sr.dateTime DESC";
+        TypedQuery<ServiceRequest> query = em
+                .createQuery(sql, ServiceRequest.class)
+                .setParameter("status", status);
+        return query.getResultList();
+    }
+
+    @Override
+    public ServiceRequest find(Long serviceRequestId) {
+        return em.find(ServiceRequest.class, serviceRequestId);
+    }
+
+    @Override
+    public void delete(ServiceRequest serviceRequest) {
+        em.remove(serviceRequest);
     }
     
 }

@@ -9,6 +9,11 @@ function openNewProposalModal(event) {
     $('#newProposalModal').modal('show');
 }
 
-$(document).ready(function() {
+function openProposalsModal(event) {
+    $('#proposalsModal').modal('show');
+}
+
+$(document).ready(function () {
     $('#successModal').modal('show');
+    $('#datetimepicker1').datetimepicker();
 });

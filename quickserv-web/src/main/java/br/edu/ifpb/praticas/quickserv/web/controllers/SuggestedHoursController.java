@@ -5,8 +5,9 @@
  */
 package br.edu.ifpb.praticas.quickserv.web.controllers;
 
-import br.edu.ifpb.praticas.quickserv.shared.domain.Period;
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -28,8 +29,8 @@ public class SuggestedHoursController implements Serializable {
     @Inject
     private Conversation conversation;
     
-    private List<Period> periods;
-    private Period period;
+    private List<LocalDateTime> dateTimes;
+    private LocalDateTime dateTime;
     
     @PostConstruct
     private void postConstruct() {
@@ -45,27 +46,32 @@ public class SuggestedHoursController implements Serializable {
     }
     
     private void initPeriod() {
-        this.period = new Period();
+        this.dateTime = LocalDateTime.now();
     }
     
     private void initPeriods() {
-        this.periods = new ArrayList<>();
+        this.dateTimes = new ArrayList<>();
     }
     
-    public List<Period> getPeriods() {
-        return this.periods;
+    public List<LocalDateTime> getDateTimes() {
+        return this.dateTimes;
     }
     
-    public String addPeriod() {
-        this.periods.add(this.period);
+    public String addDateTime() {
+        this.dateTimes.add(this.dateTime);
         initPeriod();
         return null;
     }
     
-    public String removePeriod(Period period) {
-        System.out.println("[SuggeestedHoursController] removing "+period);
-        this.periods.remove(period);
+    public String removeDateTime(LocalDateTime dateTime) {
+        System.out.println("[SuggeestedHoursController] removing "+dateTime);
+        this.dateTimes.remove(dateTime);
         return null;
+    }
+    
+    public String beautify(LocalDateTime dateTime) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        return dateTime.format(dtf);
     }
     
     public void initConversation() {
@@ -80,11 +86,13 @@ public class SuggestedHoursController implements Serializable {
         }
     }
 
-    public Period getPeriod() {
-        return period;
+    public LocalDateTime getDateTime() {
+        return dateTime;
     }
 
-    public void setPeriod(Period period) {
-        this.period = period;
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
     }
+
+    
 }

@@ -7,11 +7,8 @@ package br.edu.ifpb.praticas.quickserv.shared.domain;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import javax.persistence.CollectionTable;
-import javax.persistence.ElementCollection;
+import java.time.LocalDateTime;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -46,12 +43,8 @@ public class ServiceProposal implements Serializable {
     private String description;
     private BigDecimal price;
     
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(
-            name = "service_proposal_dates",
-            joinColumns = @JoinColumn(name = "service_proposal_id")
-    )
-    private List<Period> suggestedDates;
+    @Column(name = "choosed_date")
+    private LocalDateTime choosedDate;
     
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "service_request_id")
@@ -61,16 +54,15 @@ public class ServiceProposal implements Serializable {
     @JoinColumn(name = "professional_cpf")
     private Professional professional;
 
-    public ServiceProposal(String description, BigDecimal price, ServiceRequest serviceRequest, Professional professional) {
+    public ServiceProposal(String description, BigDecimal price, ServiceRequest serviceRequest, Professional professional, LocalDateTime choosedDate) {
         this.description = description;
         this.price = price;
-        this.suggestedDates = new ArrayList<>();
         this.serviceRequest = serviceRequest;
-        this.professional = professional;   
+        this.professional = professional;
+        this.choosedDate = choosedDate;
     }
 
     public ServiceProposal() {
-        this.suggestedDates = new ArrayList<>();
         this.professional = new Professional();
         this.serviceRequest = new ServiceRequest();
         this.price = BigDecimal.ZERO;
@@ -116,28 +108,16 @@ public class ServiceProposal implements Serializable {
         this.professional = professional;
     }
     
-    public List<Period> getSuggestedDates() {
-        return Collections.unmodifiableList(this.suggestedDates);
+    public LocalDateTime getChoosedDate() {
+        return this.choosedDate;
     }
 
-    public void setSuggestedDates(List<Period> suggestedDates) {
-        this.suggestedDates = suggestedDates;
-    }
-    
-    public void addSuggestedDates(List<Period> suggestedDates) {
-        this.suggestedDates.addAll(suggestedDates);
-    }
-    
-    public void addSuggestedDate(Period period) {
-        this.suggestedDates.add(period);
-    }
-    
-    public void removeSuggestedDate(Period period) {
-        this.suggestedDates.remove(period);
+    public void setChoosedDate(LocalDateTime choosedDate) {
+        this.choosedDate = choosedDate;
     }
 
     @Override
     public String toString() {
-        return "ServiceProposal{" + "id=" + id + ", description=" + description + ", price=" + price + ", periods=" + suggestedDates + ", serviceRequest=" + serviceRequest + ", professional=" + professional + '}';
+        return "ServiceProposal{" + "id=" + id + ", description=" + description + ", price=" + price + ", choosedDate=" + choosedDate + ", serviceRequest=" + serviceRequest + ", professional=" + professional + '}';
     }
 }

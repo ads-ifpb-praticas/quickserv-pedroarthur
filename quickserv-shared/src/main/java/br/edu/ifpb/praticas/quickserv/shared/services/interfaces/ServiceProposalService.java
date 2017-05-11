@@ -21,4 +21,5 @@ public interface ServiceProposalService {
     void update(ServiceProposal serviceProposal);
     List<ServiceProposal> listByProfessional(Professional professional);
     Long countByProfessional(Professional professional);
+    void delete(ServiceProposal serviceProposal);
 }

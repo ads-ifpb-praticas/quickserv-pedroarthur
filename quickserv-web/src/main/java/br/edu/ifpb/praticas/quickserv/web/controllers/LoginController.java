@@ -56,12 +56,11 @@ public class LoginController {
     private String redirect(UserRole role) {
         switch(role) {
             case CLIENT:
-                System.out.println("I'm a client, redirecting it...");
-                return "/client/home.xhtml";
+                return "/client/home.xhtml?faces-redirect=true";
             case PROFESSIONAL:
-                return "/professional/home.xhtml";
+                return "/professional/home.xhtml?faces-redirect=true";
             case ADMIN:
-                return "/admin/home.xhtml";
+                return "/admin/home.xhtml?faces-redirect=true";
             default:
                 return null;
         }

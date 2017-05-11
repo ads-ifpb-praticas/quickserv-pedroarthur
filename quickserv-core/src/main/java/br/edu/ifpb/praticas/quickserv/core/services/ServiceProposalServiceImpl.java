@@ -5,13 +5,16 @@
  */
 package br.edu.ifpb.praticas.quickserv.core.services;
 
+import br.edu.ifpb.praticas.quickserv.core.dao.interfaces.ServiceDAO;
 import br.edu.ifpb.praticas.quickserv.core.dao.interfaces.ServiceProposalDAO;
 import br.edu.ifpb.praticas.quickserv.shared.domain.Professional;
+import br.edu.ifpb.praticas.quickserv.shared.domain.Service;
 import br.edu.ifpb.praticas.quickserv.shared.domain.ServiceProposal;
 import br.edu.ifpb.praticas.quickserv.shared.domain.ServiceRequest;
 import br.edu.ifpb.praticas.quickserv.shared.services.interfaces.ServiceProposalService;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.ejb.EJBException;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 
@@ -26,6 +29,8 @@ public class ServiceProposalServiceImpl implements ServiceProposalService {
    
     @EJB
     private ServiceProposalDAO dao;
+    @EJB
+    private ServiceDAO serviceDAO;
 
     @Override
     public List<ServiceProposal> listByServiceRequest(ServiceRequest serviceRequest) {
@@ -50,6 +55,22 @@ public class ServiceProposalServiceImpl implements ServiceProposalService {
     @Override
     public Long countByProfessional(Professional professional) {
         return dao.countByProfessional(professional.getCpf());
+    }
+
+    @Override
+    public void delete(ServiceProposal serviceProposal) {
+        Service service = serviceDAO
+                .getByServiceProposalId(serviceProposal.getId());
+        if(service != null) {
+            throw new EJBException(new 
+        IllegalArgumentException("Você não pode remover uma proposta de serviço que já"
+                + " foi aceita por um cliente solicitante."));
+        }
+        else {
+            ServiceProposal target = dao.find(serviceProposal.getId());
+            dao.delete(target);
+        }
+        
     }
     
 }
