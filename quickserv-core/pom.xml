@@ -172,10 +172,10 @@
                     <check>
                         <branchRate>0</branchRate>
                         <lineRate>0</lineRate>
-                        <packageLineRate>30</packageLineRate>
-                        <packageBranchRate>30</packageBranchRate>
-                        <totalBranchRate>10</totalBranchRate>
-                        <totalLineRate>10</totalLineRate>
+                        <packageLineRate>0</packageLineRate>
+                        <packageBranchRate>0</packageBranchRate>
+                        <totalBranchRate>50</totalBranchRate>
+                        <totalLineRate>50</totalLineRate>
                         <regexes>
                             <regex>
                                 <pattern>br.edu.ifpb.praticas.quickserv.core.dao.*</pattern>
