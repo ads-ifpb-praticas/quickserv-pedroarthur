@@ -105,7 +105,8 @@ and open the template in the editor.
                                                         <td>#{serviceRequest.description}</td>
                                                         <td>#{serviceRequest.type.description}</td>
                                                         <td>
-                                                            <h:panelGroup rendered="#{serviceRequestCtrl.isOver(serviceRequest)}">
+                                                            <h:panelGroup rendered="#{serviceRequestCtrl.isOver(serviceRequest) 
+                                                                                      and !serviceRequestCtrl.isResolved(serviceRequest)}">
                                                                 <div class="btn-group btn-group-xs">
                                                                     <h:commandButton class="btn btn-success" 
                                                                                      action="#{serviceRequestCtrl
@@ -117,7 +118,9 @@ and open the template in the editor.
                                                                                      value="Não resolveu"/>
                                                                 </div>
                                                             </h:panelGroup>
-                                                            <h:panelGroup rendered="#{not serviceRequestCtrl.isOver(serviceRequest)}">
+                                                            <h:panelGroup rendered="#{not serviceRequestCtrl.isOver(serviceRequest) 
+                                                                                      or serviceRequestCtrl.isResolved(serviceRequest) 
+                                                                                      }">
                                                                 #{serviceRequest.status.description}
                                                             </h:panelGroup>
                                                         </td>

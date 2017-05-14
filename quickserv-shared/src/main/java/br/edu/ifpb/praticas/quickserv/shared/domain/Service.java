@@ -42,17 +42,21 @@ public class Service implements Serializable {
     
     @Enumerated(EnumType.STRING)
     private Evaluation evaluation;
+    
+    private boolean notified;
 
     public Service(ServiceRequest serviceRequest, ServiceProposal serviceProposal) {
         this.serviceRequest = serviceRequest;
         this.serviceProposal = serviceProposal;
         this.evaluation = Evaluation.NONE;
+        this.notified = false;
     }
     
     public Service() {
         this.serviceRequest = new ServiceRequest();
         this.serviceProposal = new ServiceProposal();
         this.evaluation = Evaluation.NONE;
+        this.notified = false;
     }
 
     public ServiceRequest getServiceRequest() {
@@ -77,6 +81,14 @@ public class Service implements Serializable {
 
     public void setEvaluation(Evaluation evaluation) {
         this.evaluation = evaluation;
+    }
+
+    public boolean isNotified() {
+        return notified;
+    }
+
+    public void setNotified(boolean notified) {
+        this.notified = notified;
     }
 
     @Override

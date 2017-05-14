@@ -46,7 +46,7 @@
              col-xs-10 col-xs-offset-1">
             <center><h4>Sign In to start using 
                     <span class="underline strong">Quick</span>serv</h4></center>
-            <h:form>
+            <h:form id="signin-form">
                 <div class="form-group">
                     <label for="username">E-mail</label>
                     <h:inputText class="form-control"
@@ -60,7 +60,7 @@
                                    value="#{loginController.password}" />
                 </div>
                 <div class="form-group">
-                    <h:commandButton class="btn btn-info btn-block" value="Sign in"
+                    <h:commandButton id="signIn" class="btn btn-info btn-block" value="Sign in"
                                      action="#{loginController.signIn()}" />
                 </div>
                 <p>Or sign up as a...</p>

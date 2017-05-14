@@ -106,4 +106,13 @@ public class ServiceDAOJpaImpl implements ServiceDAO {
             return null;
         else return results.get(0);
     }
+    
+    @Override
+    public List<Service> getNotNotifiedServices() {
+        TypedQuery<Service> query = em
+                .createQuery("SELECT s FROM Service s"
+                + " WHERE s.notified = FALSE", 
+                Service.class);
+        return query.getResultList();
+    }
 }

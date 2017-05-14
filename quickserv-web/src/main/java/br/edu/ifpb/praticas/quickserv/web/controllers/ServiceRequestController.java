@@ -156,8 +156,15 @@ public class ServiceRequestController {
     }
 
     public boolean isOver(ServiceRequest request) {
+        System.out.println("[ServiceRequestController.isOver()]");
         return this.serviceRequestService.isOver(request);
     }
+    
+    public boolean isResolved(ServiceRequest request) {
+        return request.getStatus().equals(ServiceRequestStatus.NOT_SOLVED) ||
+                request.getStatus().equals(ServiceRequestStatus.SOLVED);
+    }
+    
 
     public ServiceType[] getTypes() {
         return ServiceType.values();

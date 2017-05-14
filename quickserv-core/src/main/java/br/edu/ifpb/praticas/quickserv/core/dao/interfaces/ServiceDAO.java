@@ -22,4 +22,5 @@ public interface ServiceDAO extends DAO<Service> {
     Long countByProfessional(String professionalCpf);
     Service getByServiceRequestId(Long requestId);
     Service getByServiceProposalId(Long proposalId);
+    List<Service> getNotNotifiedServices();
 }

@@ -61,9 +61,11 @@ public class ServiceRequestServiceImpl implements ServiceRequestService {
     }
     
     private void validate(ServiceRequest serviceRequest) {
-        ServiceRequest found = serviceRequestDAO.find(serviceRequest.getId());
-        if(found != null)
-            throw new IllegalArgumentException("this request already exists!");
+        if(serviceRequest.getId() != null) {
+            ServiceRequest found = serviceRequestDAO.find(serviceRequest.getId());
+            if(found != null)
+                throw new IllegalArgumentException("this request already exists!");
+        }
     }
 
     @Override
@@ -100,8 +102,9 @@ public class ServiceRequestServiceImpl implements ServiceRequestService {
     public boolean isOver(ServiceRequest serviceRequest) {
         if(serviceRequest.getStatus().equals(ServiceRequestStatus.SOLVED) || 
                 serviceRequest.getStatus().equals(ServiceRequestStatus.NOT_SOLVED))
-            return false;
+            return true;
         Service service = this.serviceDAO.getByServiceRequestId(serviceRequest.getId());
+        System.out.println("[ServiceRequestServiceImpl.isOver] service is "+service);
         if(service == null) return false;
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime expected = service.getServiceProposal().getChoosedDate().plusDays(1);
